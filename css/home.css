@@ -1,0 +1,36 @@
+body{
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.container-banner{
+    padding: 10px;
+    margin-top: 4rem;
+}
+
+.banner-title{
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-family: 'Cabin Sketch';
+    
+}
+
+#active-page{
+    color: rgb(201, 60, 35) !important;
+}
+
+.card{
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.list-group-item{
+    color:white;
+    font-size: 20px;
+}
+
+.navbar{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    border: 2px solid #bb1913;
+    z-index: 20;
+}
