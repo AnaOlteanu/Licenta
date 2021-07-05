@@ -17,7 +17,11 @@ const adminController = require('../controllers/Admins.cjs');
 router.get('/admins/create-admin', (req, res) => {
     res.render('admins-add')
 })
-
 router.post('/admins/create-admin', adminController.createAdmin);
+
+router.get('/admins/login', (req, res) => {
+  res.render('admins-login')
+})
+router.post('/admins/login', adminController.loginAdmin);
 
 module.exports = router;

@@ -9,6 +9,7 @@ app.use(express.static(__dirname))
     .use('/css', express.static('css'))
     .use('/images', express.static('images'))
     .use(express.urlencoded({extended: true}))
+    .use(express.json())
  
 app.get('/', (req, res) => {
     res.render('index')
