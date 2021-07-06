@@ -16,9 +16,9 @@ exports.createAdmin = async (req, res) => {
 
     const {username, password, role} = req.body;
     if (!req.body.username|| !req.body.password|| !req.body.role) {
-        res.status(400).send({
-          message: "Content can not be empty!"
-        });
+        res.render('admins-add', {
+            message: 'Plase fill in all the fields!'
+        })
     }
     else{
         const salt = await bcrypt.genSalt()
@@ -26,9 +26,9 @@ exports.createAdmin = async (req, res) => {
         const admin = new Admin({username: username, password: hashedPassword, role: role});
         Admin.create(admin, (err, data) => {
             if (err)
-                res.status(500).send({
-                    message:err.message || "Some error occurred while creating the Admin."
-                });
+            res.render('admins-add', {
+                message: err.message || "Some error occurred while creating the Admin."
+            })
             else {
                 res.redirect('/home');
             }
@@ -38,34 +38,31 @@ exports.createAdmin = async (req, res) => {
 }
 
 exports.loginAdmin = (req, res) => {
-    try{
-        const {username, password} = req.body;
 
-        if(!username || !password){
-            return res.status(400).render('login', {
-                message: 'Please fill in the username and password!'
+  
+    const {username, password} = req.body;
+
+    if(!username || !password){
+        return res.render('admins-login', {
+            message: "Please provide an username and a password!"
+            });
+    }
+    const admin = new Admin({username: username, password: password});
+    Admin.login(admin, (err, data) => {
+
+        if (data == 'denied' || data == 'no result'){
+            return res.render('admins-login', {
+                message: 'Username or password incorrect!'
             })
         }
-        const admin = new Admin({username: username, password: password});
-        Admin.login(admin, (err, data) => {
-            console.log('err' + err);
-            if (data == 'denied' || data == 'noresult'){
-                res.status(401).render('admins-login', {
-                    message: 'Username or password incorrect'
-                }
-                )
-            }
-            else if(err){
-                res.status(500).send({
-                    message:err.message || "Some error occurred while creating the Admin."
-                });
-            }
-            else {
-                res.redirect('/home');
-            }
-        })
+        else if(err){
+            return res.render('login', {
+                message: err.message || "Some error occurred while login the Admin."
+            })
+        }
+        else {
+            res.redirect('/home');
+        }
+    })
 
-    }catch(error){
-        //console.log(error)
-    }
 }

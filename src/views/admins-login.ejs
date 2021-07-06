@@ -38,12 +38,14 @@
                         <div class="d-flex justify-content-center links" id="register-box">
                             You are not an Admin?<a href="/admins/create-admin" id="register-btn">Become admin!</a>
                         </div>
-                        
                     </div>
+                    </div>
+                    <% if (message) { %>
+                        <h8 class="alert alert-danger"><%= message %></h8> 
+                    <%} %>
                 </div>
-            </div>
-
-
+                
         </div>
+    </div>
     </body>
 </html>

@@ -15,12 +15,12 @@ const adminController = require('../controllers/Admins.cjs');
 
 
 router.get('/admins/create-admin', (req, res) => {
-    res.render('admins-add')
+    res.render('admins-add', {message: ''})
 })
 router.post('/admins/create-admin', adminController.createAdmin);
 
 router.get('/admins/login', (req, res) => {
-  res.render('admins-login')
+  res.render('admins-login', {message: ''})
 })
 router.post('/admins/login', adminController.loginAdmin);
 

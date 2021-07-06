@@ -79,12 +79,12 @@ a{
 }
 
 #register-btn{
-    color: rgb(221, 208, 22);
+    color: rgb(243, 63, 63);
 }
 
 #register-btn:hover{
-    background-color: yellow;
+    background-color: rgb(245, 55, 55);
     text-decoration: none;
-    color: black;
-    font-weight: bold;
+    color: rgb(255, 255, 255);
+ 
 }

@@ -34,19 +34,17 @@ Admin.create = (newAdmin, result) => {
 }
 
 Admin.login = (admin, result) => {
-    mysql.query("SELECT * FROM admins WHERE username = ?", [admin.username], async (err, res) => {
-        console.log('result')
-        console.log(res);
-        console.log("------------------");
-        if(!res){
+    mysql.query("SELECT * FROM admins WHERE username = ?", admin.username, async (err, res) => {
+
+        if(res.length == 0){
             console.log('no result')
-            result(null, 'noresult');
+            result(null, 'no result');
             return;
         }
+
         try{
             
             console.log('Adminul este: ' + admin.username)
-            // console.log('Parola introdusa este: ' + admin.password)
             if(await bcrypt.compare(admin.password, res[0].password)){
                 console.log('Success')
                 result(null, admin)
