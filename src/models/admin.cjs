@@ -47,7 +47,7 @@ Admin.login = (admin, result) => {
             console.log('Adminul este: ' + admin.username)
             if(await bcrypt.compare(admin.password, res[0].password)){
                 console.log('Success')
-                result(null, admin)
+                result(null, res)
             }
             else{
                 console.log('Access denied')

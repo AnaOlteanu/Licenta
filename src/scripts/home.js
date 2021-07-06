@@ -85,12 +85,14 @@ function getMovie(){
         const date = document.createElement('li');
         date.classList.add('list-group-item');
         date.style.background = 'rgba(0, 0, 0, 0.8)'; 
+        date.style.color = 'white'; 
         date.innerHTML = '<strong>Release date: </strong>' + `${release_date}`;
         lista.appendChild(date);
         
         const genres_movie = document.createElement('li');
         genres_movie.classList.add('list-group-item');
         genres_movie.style.background = 'rgba(0, 0, 0, 0.8)'; 
+        genres_movie.style.color = 'white'; 
         genres_movie.innerHTML = '<strong>Genres: </strong>';
         for(var i = 0; i < genres.length; i++){
             if(i == genres.length-1){
@@ -104,7 +106,9 @@ function getMovie(){
         const production = document.createElement('li');
         production.classList.add('list-group-item');
         production.style.background = 'rgba(0, 0, 0, 0.8)'; 
+        production.style.color = 'white'; 
         production.innerHTML = '<strong>Production companies: </strong>';
+        
         for(var i = 0; i < production_companies.length; i++){
             if(i == production_companies.length-1){
                 production.innerHTML += `${production_companies[i].name}.`;
@@ -117,6 +121,7 @@ function getMovie(){
         const overview_movie = document.createElement('li');
         overview_movie.classList.add('list-group-item');
         overview_movie.style.background = 'rgba(0, 0, 0, 0.8)';
+        overview_movie.style.color = 'white'; 
         overview_movie.innerHTML = '<strong>Overview: </strong>' + `${overview}`;
         lista.appendChild(overview_movie);
 
@@ -145,6 +150,7 @@ function getMovie(){
         jumbotron_text.classList.add('jumbotron');
         jumbotron_text.classList.add('jumbotron-fluid');
         jumbotron_text.style.background = 'rgba(0, 0, 0, 0.8)';
+
 
         const rand = document.createElement('div');
         rand.classList.add('row');

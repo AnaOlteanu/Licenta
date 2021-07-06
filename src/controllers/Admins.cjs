@@ -1,6 +1,15 @@
 const Admin = require('../models/admin.cjs')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const express = require('express');
+const session = require('express-session');
+
+const adminApp = express();
+adminApp.use(session({
+    secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 
 exports.getAdmins = (req, res) => {
     Admin.getAll((err, data) => {
@@ -13,7 +22,6 @@ exports.getAdmins = (req, res) => {
 }
 
 exports.createAdmin = async (req, res) => {
-
     const {username, password, role} = req.body;
     if (!req.body.username|| !req.body.password|| !req.body.role) {
         res.render('admins-add', {
@@ -39,7 +47,6 @@ exports.createAdmin = async (req, res) => {
 
 exports.loginAdmin = (req, res) => {
 
-  
     const {username, password} = req.body;
 
     if(!username || !password){
@@ -48,8 +55,8 @@ exports.loginAdmin = (req, res) => {
             });
     }
     const admin = new Admin({username: username, password: password});
-    Admin.login(admin, (err, data) => {
 
+    Admin.login(admin, (err, data) => {
         if (data == 'denied' || data == 'no result'){
             return res.render('admins-login', {
                 message: 'Username or password incorrect!'
@@ -61,8 +68,17 @@ exports.loginAdmin = (req, res) => {
             })
         }
         else {
+            console.log(data);
+            req.session.loggedin = true;
+            req.session.username = data[0].username;
             res.redirect('/home');
         }
     })
 
+}
+
+exports.logoutAdmin = (req, res) => {
+    req.session.loggedin = false;
+    req.session.username = '';
+    res.redirect('/home');
 }

@@ -1,0 +1,11 @@
+#active-page{
+    color: rgb(201, 60, 35) !important;
+}
+
+.navbar{
+    position: -webkit-sticky;
+    position: sticky !important;
+    top: 0;
+    border: 2px solid #bb1913;
+    z-index: 20;
+}

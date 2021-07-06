@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session')
 const adminRoutes = require('./routes/admins-routes.cjs');
 
 const app = express();
@@ -10,13 +11,24 @@ app.use(express.static(__dirname))
     .use('/images', express.static('images'))
     .use(express.urlencoded({extended: true}))
     .use(express.json())
+    .use(session({
+        secret: 'secret',
+        resave: true,
+        saveUninitialized: true
+    }))
  
 app.get('/', (req, res) => {
     res.render('index')
 });
 
 app.get('/home', (req, res) => {
-    res.render('home')
+    if(req.session.loggedin){
+        res.render('home' , { admin: req.session.username})
+    }
+    else{
+        res.render('home',{admin: ''})
+    }
+    
 })
 
 app.get('/details', (req, res) => {

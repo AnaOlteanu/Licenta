@@ -1,5 +1,6 @@
 body{
-    background: rgba(0, 0, 0, 0.8);
+
+    background: rgba(0, 0, 0, 0.8) !important;
 }
 
 .container-banner{
@@ -14,6 +15,10 @@ body{
     
 }
 
+#banner-2{
+    color:rgb(201, 60, 35);
+}
+
 #active-page{
     color: rgb(201, 60, 35) !important;
 }
@@ -25,12 +30,13 @@ body{
 .list-group-item{
     color:white;
     font-size: 20px;
-}
+} 
 
-.navbar{
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    border: 2px solid #bb1913;
-    z-index: 20;
+.logout-banner{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+
+}
+.logout-banner:hover{
+    color:rgb(26, 153, 22);
 }
