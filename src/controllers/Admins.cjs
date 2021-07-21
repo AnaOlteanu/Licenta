@@ -68,10 +68,9 @@ exports.loginAdmin = (req, res) => {
             })
         }
         else {
-            console.log(data);
             req.session.loggedin = true;
             req.session.username = data[0].username;
-            res.redirect('/home');
+            //res.redirect('/home');
         }
     })
 

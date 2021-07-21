@@ -11,7 +11,8 @@ router.get('/admins/create-admin', (req, res) => {
     res.render('admins-add', {message: ''})
   }
   else{
-      res.send('Please login to view this page')
+      //res.send('Please login to view this page')
+      res.render('admins-error')
   }
   
 })

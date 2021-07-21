@@ -1,8 +1,10 @@
 const mysql = require('./mysql.cjs');
+const bcrypt = require('bcrypt');
 
 const User = function(user){
     this.username = user.username;
     this.password = user.password;
+    this.is_active = 'N';
 }
 
 User.getAll = result => {
@@ -29,4 +31,31 @@ User.create = (newUser, result) => {
     })
 }
 
-module.exports = Admin;
+User.login = (user, result) => {
+    mysql.query("SELECT * FROM users WHERE username = ?", user.username, async (err, res) => {
+
+        if(res.length == 0){
+            console.log('no result')
+            result(null, 'no result');
+            return;
+        }
+
+        try{
+            
+            console.log('Userul este: ' + user.username)
+            if(await bcrypt.compare(user.password, res[0].password)){
+                console.log('Success')
+                result(null, res)
+            }
+            else{
+                console.log('Access denied')
+                result(err,'denied')
+                return;
+            }
+        }catch{
+            //res.status(500).send()
+        }
+    })
+}
+ 
+module.exports = User;

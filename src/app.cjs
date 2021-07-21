@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session')
 const adminRoutes = require('./routes/admins-routes.cjs');
+const userRoutes = require('./routes/users-routes.cjs');
 
 const app = express();
 
@@ -23,10 +24,10 @@ app.get('/', (req, res) => {
 
 app.get('/home', (req, res) => {
     if(req.session.loggedin){
-        res.render('home' , { admin: req.session.username})
+        res.render('home' , { user: req.session.username})
     }
     else{
-        res.render('home',{admin: ''})
+        res.render('home',{user: ''})
     }
     
 })
@@ -35,16 +36,12 @@ app.get('/details', (req, res) => {
     res.render('details')
 })
 
-app.get('/login', (req, res) => {
-    res.render('login')
-})
-
-app.get('/register', (req, res) => {
-    res.render('register')
-})
 
 //admin routes
 app.use(adminRoutes);
+
+//user routes
+app.use(userRoutes);
 
 const port = 3000;
 app.listen(port, () => {

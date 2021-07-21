@@ -22,10 +22,10 @@
                     <a class="nav-link active"  aria-current="page" href="/home">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/users/login">Login</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="active-page" href="/register">Register</a>
+                    <a class="nav-link" id="active-page" href="/users/register">Register</a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,10 +37,7 @@
                     </ul>
                   </li>
                 </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" id="inputSearch" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" id="search" type="submit">Search</button>
-                </form>
+              
               </div>
             </div>
           </nav>
@@ -49,16 +46,17 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <form onsubmit="event.preventDefault()" class="box">
+                        <form action="/users/register"  method="POST" class="box">
                             <h1>Register</h1>
                             <p> Please complete all the fields!</p> 
-                            <input type="text" name="username" placeholder="Username"> 
-                            <input type="password" name="email" placeholder="Email"> 
+                            <input type="text" name="username" placeholder="Username(Email)"> 
                             <input type="password" name="password" placeholder="Password"> 
-                            <input type="password" name="confirmPassword" placeholder="Confirm password">
                             <div class="form-group text-center" >
                                 <button class="btn" type="submit" value="login">Register</button>
                             </div>
+                            <% if (message) { %>
+                              <h5 class="alert alert-danger"><%= message %></h5> 
+                          <%} %>
                         </form>
                     </div>
                 </div>
