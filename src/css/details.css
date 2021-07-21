@@ -26,9 +26,5 @@
 }
 
 .like-btn:hover{
-    color: rgb(14, 168, 8);
-}
-
-.dislike-btn:hover{
-    color: rgb(248, 0, 0);
+    color: rgb(14, 168, 8) !important;
 }

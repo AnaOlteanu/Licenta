@@ -17,7 +17,7 @@ userApp.use(session({
 }));
 
 
-exports.registerUser= async (req, res) => {
+exports.registerUser = async (req, res) => {
     const {username, password} = req.body;
     if (!req.body.username|| !req.body.password) {
         return res.render('register', {
@@ -26,12 +26,12 @@ exports.registerUser= async (req, res) => {
     }
     else if(emailValidator.validate(username) == false){
         res.render('register', {
-            message: "Plase provide a correct email address!"
+            message: "Please provide a correct email address!"
         })
     }
     else if(schema.validate(password) == false){
         res.render('register', {
-            message: "Plase provide a minimum 3 character password!"
+            message: "Please provide a minimum 3 character password!"
         })
     }
     else{
@@ -62,28 +62,36 @@ exports.loginUser = (req, res) => {
     }
     else if(emailValidator.validate(username) == false){
         res.render('login', {
-            message: "Plase provide a correct email address!"
+            message: "Please provide a correct email address!"
         })
     }
-    const user = new User({username: username, password: password});
+    else if(schema.validate(password) == false){
+        res.render('login', {
+            message: "Please provide a minimum 3 character password!"
+        })
+    }
+    else{
+        const user = new User({username: username, password: password});
 
-    User.login(user, (err, data) => {
-        if (data == 'denied' || data == 'no result'){
-            return res.render('login', {
-                message: 'Username or password incorrect!'
-            })
-        }
-        else if(err){
-            return res.render('login', {
-                message: "Some error occurred while login the User."
-            })
-        }
-        else {
-            req.session.loggedin = true;
-            req.session.username = data[0].username;
-            res.redirect('/home');
-        }
-    })
+        User.login(user, (err, data) => {
+            if (data == 'denied' || data == 'no result'){
+                return res.render('login', {
+                    message: 'Username or password incorrect!'
+                })
+            }
+            else if(err){
+                return res.render('login', {
+                    message: "Some error occurred while login the User."
+                })
+            }
+            else {
+                req.session.loggedin = true;
+                req.session.username = data[0].username;
+                req.session.userId = data[0].id;
+                res.redirect('/home');
+            }
+        })
+    }
 
 }
 

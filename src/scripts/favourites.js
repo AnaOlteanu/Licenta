@@ -1,40 +1,29 @@
 const api_key = 'api_key=d333bb863d013220663cd102b8cf611e';
 const tmdb_api = 'https://api.themoviedb.org/3';
-const popular_movies_url = tmdb_api + '/discover/movie?sort_by=popularity.desc&' + api_key;
+const get_movie_api = '/movie/';
 const image_url = 'https://image.tmdb.org/t/p/w500';
 
 
 const main = document.getElementById("main");
 
-getPopularMovies(popular_movies_url);
 
-function getPopularMovies(url){
-
-    fetch(url).then(res => res.json()).then(data =>{
-        showMovies(data.results);
-        var movie_arr = []
-            data.results.forEach(movie =>{
-                movie_arr.push(movie.id);
-            })
-            
-    })
-}
-
-function showMovies(data){
+function getFavouriteMovies(data_fav){
     main.innerHTML = '';
     const movie_el = document.createElement('div');
     movie_el.classList.add('row');
     movie_el.style.margin = "100px";
 
-    data.forEach(movie => {     
-        const {title, poster_path, release_date, overview, id} = movie;
-        const movie_details = document.createElement('div');
-        movie_details.classList.add('col-lg-3');
-        movie_details.classList.add('d-flex');
-        movie_details.classList.add('align-items-stretch');
-        
-        movie_details.innerHTML = 
-        ` 
+    for(let i = 0; i < data_fav.length; i++){
+        const get_movie_url = tmdb_api + get_movie_api + data_fav[i] + '?' + api_key;
+        fetch(get_movie_url).then(res => res.json()).then(data =>{
+            const {title,poster_path, release_date, overview, id} = data;
+            const movie_details = document.createElement('div');
+            movie_details.classList.add('col-lg-3');
+            movie_details.classList.add('d-flex');
+            movie_details.classList.add('align-items-stretch');
+            
+            movie_details.innerHTML = 
+            ` 
                 <div class="card" style="padding:20px; margin: 15px; background: rgba(206, 97, 83, 0.6); color: white;">
                     <img class="card-img-top" src="${image_url+poster_path}" alt="${title}">
                     <div class="card-body">
@@ -43,35 +32,39 @@ function showMovies(data){
                         <a onclick="showMovieDetails('${id}')" href='#' class="btn btn-secondary" style="color: white;"> Click for details</a>
                     </div>
                 </div>
-            
-        `
-        movie_el.appendChild(movie_details);
-        main.appendChild(movie_el);
-    });
+                
+            `
+            movie_el.appendChild(movie_details);
+            main.appendChild(movie_el);
+                    
+            })
+
+    
+    }
 }
 
 
 
 function showMovieDetails(id){
-    window.location = 'details?movie_id=' + id;
+    window.location = 'detailsFav?movie_id=' + id;
     return false;
 }
 
-function getMovie(){
+function getFavMovieDetails(){
     var url = new URL(window.location.href);
     let movie_id = url.searchParams.get('movie_id'); 
     //console.log(movie_id);
     let movie_details_url = tmdb_api + '/movie/' + movie_id + '?' + api_key;
 
+    const container_button = document.getElementById('container_back_button');
+    container_button.innerHTML = '';
+    container_button.innerHTML = '<button id="back_button"><a href="/favourites"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a></button>';
+
+
     fetch(movie_details_url).then(res => res.json()).then(movie =>{
 
         const {title,poster_path,release_date, overview, id, production_companies, genres} = movie;
     
-        const container_button = document.getElementById('container_back_button');
-        container_button.innerHTML = '';
-        container_button.innerHTML = '<button id="back_button"><a href="/home"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a></button>';
-
-
 
         const det = document.getElementById('det');
         det.innerHTML = '';
@@ -141,14 +134,6 @@ function getMovie(){
         titlu.style.color = 'white';
 
         details_right.appendChild(titlu);
-
-        if (isLoggedIn){
-            const like_btns = document.createElement('div');
-            like_btns.innerHTML = `<button onclick="likeMovie(${movie_id})" style="background-color: Transparent;background-repeat:no-repeat;border: none;overflow: hidden;outline:none"><i style="color:white;" class="fa fa-thumbs-up like-btn"></i></button>`;
-            like_btns.style.fontSize = '40px';
-            like_btns.classList.add('like-btns');
-            details_right.appendChild(like_btns);
-        }
  
         details_right.appendChild(lista);
 
@@ -186,44 +171,4 @@ function getMovie(){
 
 }
 
-const button_search = document.getElementById('search');
-const input_search = document.getElementById('inputSearch');
-const banner = document.getElementById('banner');
-const container_banner = document.getElementById('id-container-banner');
-
-button_search.onclick = function(event){
-    event.preventDefault();
-    const value = input_search.value;
-    const searchUrl = tmdb_api + '/search/movie?' + api_key + '&query=' + value;
-    console.log(value)
-    
-
-    fetch(searchUrl).then((res) => res.json())
-        .then((data) => {
-            showMovies(data.results);
-            
-            banner.innerHTML = '';
-            banner.innerHTML = 'You searched for movie ' + `<strong>'${value}'</strong>`;
-            
-            var movie_arr = []
-            data.results.forEach(movie =>{
-                movie_arr.push(movie.id);
-            })
-            
-
-        })
-}
-
-function likeMovie(movie_id){
-    fetch('/likeMovie', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-          },
-        body: JSON.stringify({ 
-            movie_id: movie_id
-        })
-    }
-    )
-}
 

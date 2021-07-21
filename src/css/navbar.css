@@ -9,3 +9,7 @@
     border: 2px solid #bb1913;
     z-index: 20;
 }
+body{
+
+    background: rgba(0, 0, 0, 0.8) !important;
+}

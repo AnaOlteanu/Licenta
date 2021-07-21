@@ -22,9 +22,15 @@
           <li class="nav-item">
             <a class="nav-link active" id="active-page" aria-current="page" href="/home">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/login">Login</a>
-          </li>
+          <% if (user) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="users/logout">Logout</a>
+            </li>
+        <%} else {%>
+            <li class="nav-item">
+              <a class="nav-link" href="users/login">Login</a>
+            </li>
+        <% } %>
           <li class="nav-item">
             <a class="nav-link" href="/users/register">Register</a>
           </li>
@@ -37,6 +43,12 @@
               <li><a class="dropdown-item" href="/admins/create-admin">Add admin</a></li>
             </ul>
           </li>
+          <% if (user) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/favourites">Favourites</a>
+            </li>
+        <%} %>
+          
       
         </ul>
         <form class="d-flex">
@@ -51,7 +63,6 @@
         <h1 class="banner-title" id="banner">Here are the most popular movies right now!</h1>
         <% if (user) { %>
           <h3 class="banner-title" id="banner-2">Welcome, user <%= user %>! <a href="users/logout" class="logout-banner"> Logout!</a></h3> 
-          
       <%} %>
     </div>
         
