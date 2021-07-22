@@ -2,7 +2,9 @@ const FavouriteMovie = require('../models/favourite_movies.cjs')
 const session = require('express-session');
 
 exports.showFavourites = (req, res) => {
+
     var user_id = req.session.userId;
+    
     FavouriteMovie.getAll(user_id, (err, data) => {
         if(data == 'no favourites'){
             var fav = []

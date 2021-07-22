@@ -29,9 +29,10 @@
               <a class="nav-link" href="users/login">Login</a>
             </li>
         <% } %>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/register">Register</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/register">Register</a>
+        </li>
+        <% if (!user) { %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Admins
@@ -41,9 +42,13 @@
               <li><a class="dropdown-item" href="/admins/create-admin">Add admin</a></li>
             </ul>
           </li>
+      <%} %>
           <% if (user) { %>
             <li class="nav-item">
               <a class="nav-link" href="/favourites">Favourites</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-page" href="/profile">My profile</a>
             </li>
         <%} %>
           

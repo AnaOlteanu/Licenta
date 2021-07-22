@@ -19,7 +19,8 @@ app.use(express.static(__dirname))
         secret: 'secret',
         resave: true,
         saveUninitialized: true,
-        already_liked: false
+        already_liked: false,
+        adminLoggedIn: false
     }))
  
 app.get('/', (req, res) => {

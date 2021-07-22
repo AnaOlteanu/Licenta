@@ -1,0 +1,91 @@
+#profile-title{
+    color: white;
+    text-align: center;
+    font-family: 'Cabin Sketch';
+    font-size: 50px;
+}
+
+.container-banner{
+    padding: 3%;
+    margin-top: 2rem;
+    border: solid 2px rgb(184, 40, 4);
+    background: rgb(254,68,51);
+    background: radial-gradient(circle, rgba(254,68,51,1) 27%, rgba(238,236,192,1) 100%);
+}
+
+#username{
+    color: rgb(235, 235, 235);
+    font-family: 'Andika';
+    font-size: 50px;
+    text-shadow: 3px 2px #6d0101;
+}
+
+#container-logout{
+    text-align: right;
+    padding-right: 3%;
+}
+
+#logout{
+    text-decoration: none;
+    color: white;
+    font-family:'Cabin Sketch';
+    text-shadow: 2px 2px #ff0000;
+    font-size: 50px;
+}
+
+#logout:hover{
+    color: rgba(202, 24, 0, 0.973);
+}
+
+#container-fav-title{
+    margin-top: 4rem;
+    background: rgba(0, 0, 0, 0.6);
+    padding-left: 3%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+}
+
+#fav-title{
+    color: white;
+    font-size: 35px;
+    font-family: 'Cabin Sketch';
+}
+
+.card{
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+#see-more{
+    font-size: 25px; 
+    text-decoration: none; 
+    color: rgb(243, 125, 125);
+}
+
+#see-more:hover{
+    color: rgb(173, 16, 16);
+}
+
+#no-fav{
+    color: white;
+    font-size: 20px;
+}
+
+#no-fav a{
+    text-decoration: none;
+    color: white;
+    font-style: italic;
+}
+#no-fav a:hover{
+    color: yellow;
+}
+
+.container-no-fav{
+    padding: 3%;
+    border: solid 2px black;
+}
+
+#fav-p{
+    font-family:'Lucida Sans';
+    font-size: 18px;
+    color:rgb(223, 222, 222);
+}

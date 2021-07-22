@@ -1,4 +1,5 @@
 const User = require('../models/user.cjs')
+const FavouriteMovies = require('../models/favourite_movies.cjs')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const express = require('express');
@@ -99,4 +100,31 @@ exports.logoutUser = (req, res) => {
     req.session.loggedin = false;
     req.session.username = '';
     res.redirect('/home');
+}
+
+exports.profileUser = (req, res) => {
+
+    const user_id = req.session.userId;
+    FavouriteMovies.getAll(user_id, (err, data) => {
+        if(data == 'no favourites'){
+            var fav = []
+            res.render('profile', {
+                favourites: false,
+                user: req.session.username,
+                data: fav
+            })
+        }
+        else{
+            
+            var fav = []
+            for(let i = 0; i < data.length; i++){
+                fav.push(data[i].movie_id)
+            }
+            res.render('profile', {
+                favourites: true,
+                data: fav,
+                user: req.session.username
+            })
+        }
+    });
 }

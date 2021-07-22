@@ -70,6 +70,7 @@ exports.loginAdmin = (req, res) => {
         else {
             req.session.loggedin = true;
             req.session.username = data[0].username;
+            req.session.adminLoggedIn = true;
             //res.redirect('/home');
         }
     })
