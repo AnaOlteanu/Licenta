@@ -105,6 +105,7 @@ exports.logoutUser = (req, res) => {
 exports.profileUser = (req, res) => {
 
     const user_id = req.session.userId;
+    
     FavouriteMovies.getAll(user_id, (err, data) => {
         if(data == 'no favourites'){
             var fav = []

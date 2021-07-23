@@ -71,8 +71,6 @@ function getMovie(){
         container_button.innerHTML = '';
         container_button.innerHTML = '<button id="back_button"><a href="/home"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a></button>';
 
-
-
         const det = document.getElementById('det');
         det.innerHTML = '';
 
@@ -144,7 +142,7 @@ function getMovie(){
 
         if (isLoggedIn){
             const like_btns = document.createElement('div');
-            like_btns.innerHTML = `<button onclick="likeMovie(${movie_id})" style="background-color: Transparent;background-repeat:no-repeat;border: none;overflow: hidden;outline:none"><i style="color:white;" class="fa fa-thumbs-up like-btn"></i></button>`;
+            like_btns.innerHTML = `<button id="like-btn" onclick="likeMovie(${movie_id})" style="background-color: Transparent;background-repeat:no-repeat;border: none;overflow: hidden;outline:none"><i style="color:white;" class="fa fa-thumbs-up like-btn"></i></button>`;
             like_btns.style.fontSize = '40px';
             like_btns.classList.add('like-btns');
             details_right.appendChild(like_btns);
@@ -214,6 +212,11 @@ button_search.onclick = function(event){
         })
 }
 
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
 function likeMovie(movie_id){
     fetch('/likeMovie', {
         method: 'POST',
@@ -223,7 +226,27 @@ function likeMovie(movie_id){
         body: JSON.stringify({ 
             movie_id: movie_id
         })
-    }
-    )
+    }).then(res => res.json()).then(data =>{
+        if(data.status === "error"){
+            const likeBtn = document.getElementById('like-btn');
+            likeBtn.style.display = 'none';
+            const likeBtns = document.getElementsByClassName('like-btns');
+            const alreadyLikedMessage= document.createElement('h5');
+            alreadyLikedMessage.classList.add('alert');
+            alreadyLikedMessage.classList.add('alert-danger');
+            alreadyLikedMessage.innerHTML = 'You already liked this movie!';
+            likeBtns[0].appendChild(alreadyLikedMessage);
+
+        } else if(data.status === "success"){
+            const likeBtn = document.getElementById('like-btn');
+            likeBtn.style.display = 'none';
+            const likeBtns = document.getElementsByClassName('like-btns');
+            const alreadyLikedMessage= document.createElement('h5');
+            alreadyLikedMessage.classList.add('alert');
+            alreadyLikedMessage.classList.add('alert-success');
+            alreadyLikedMessage.innerHTML = 'You added the movie to your favourites!';
+            likeBtns[0].appendChild(alreadyLikedMessage);
+        }
+    })
 }
 

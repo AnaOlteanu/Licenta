@@ -7,8 +7,6 @@ const trailer_url = ''
 
 const main = document.getElementById("main");
 
-
-
 function getFavouriteMovies(data_fav){
     main.innerHTML = '';
     const movie_el = document.createElement('div');
