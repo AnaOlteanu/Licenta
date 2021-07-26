@@ -23,9 +23,9 @@ dislikedMovie.getAll = (user, result) => {
 }
 
 dislikedMovie.getUsers = (movie_ids, user_id, result) => {
-    
+
     console.log(movie_ids);
-    mysql.query('SELECT user_id FROM movie_dislikes WHERE movie_id IN (' 
+    mysql.query('SELECT * FROM movie_dislikes WHERE movie_id IN (' 
                         + movie_ids.join() + ') AND user_id != ?', user_id, (err, res) => {
         if (err) {
             console.log("error: ", err);
