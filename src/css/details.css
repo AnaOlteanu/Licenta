@@ -21,10 +21,19 @@
     color: rgb(218, 49, 19);
 }
 
-.like-btns{
+#like-btn, #dislike-btn{
     color: white;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    overflow: hidden;
+    outline:none;
 }
 
 .like-btn:hover{
     color: rgb(14, 168, 8) !important;
+}
+
+.dislike-btn:hover{
+    color: rgb(230, 11, 11) !important;
 }

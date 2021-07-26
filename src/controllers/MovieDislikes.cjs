@@ -1,34 +1,34 @@
-const MovieLike = require('../models/movie_likes.cjs')
+const MovieDislike = require('../models/movie_dislikes.cjs')
 const session = require('express-session');
 
-exports.addMovieLike = async (req, res) => {
+exports.addMovieDislike = async (req, res) => {
     var movie_id = req.body.movie_id;
     var user_id = req.session.userId;
     
-    const movie_like = new MovieLike({
+    const movie_dislike = new MovieDislike({
         movie_id: movie_id, 
         user_id: user_id
     });
 
     let alreadyExists = false;
     try {
-        await MovieLike.checkIfExists(movie_like, async (err, data) => {
+        await MovieDislike.checkIfExists(movie_dislike, async (err, data) => {
             if (err === true) {
                 alreadyExists = true;
             }
             if (alreadyExists === false && user_id) {
-                MovieLike.add(movie_like, (err, data) => {
+                MovieDislike.add(movie_dislike, (err, data) => {
                     if(data === 'success'){
                         res.status(200).json({
                             status: 'success',
-                            message: 'Movie added to list' 
+                            message: 'Movie added to dislike list' 
                         });
                     }
                 });
             } else {
                 res.status(200).json({
                     status: 'error',
-                    message: 'You already liked this movie' 
+                    message: 'You already disliked this movie' 
                 });
             }
         });
@@ -38,15 +38,15 @@ exports.addMovieLike = async (req, res) => {
 }
 
 
-exports.getLikeButton = async (req, res) => {
+exports.getDislikeButton = async (req, res) => {
 
     var movie_id = req.query.movie_id;
     if(req.session.loggedin){
-        MovieLike.checkIfExists({ movie_id: movie_id, user_id: req.session.userId}, (err, data) => {
+        MovieDislike.checkIfExists({ movie_id: movie_id, user_id: req.session.userId}, (err, data) => {
             if(err == true){
                 res.status(200).json({
                     status: 'error',
-                    message: 'You already liked this movie' 
+                    message: 'You already disliked this movie' 
                 });
             } else {
                 res.status(200).json({

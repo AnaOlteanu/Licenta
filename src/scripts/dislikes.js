@@ -7,7 +7,8 @@ const image_url = 'https://image.tmdb.org/t/p/w500';
 const main = document.getElementById("main");
 
 
-function getFavouriteMovies(data_fav){
+function getDislikedMovies(data_fav){
+    console.log(data_fav);
     main.innerHTML = '';
     const movie_el = document.createElement('div');
     movie_el.classList.add('row');
@@ -47,11 +48,11 @@ function getFavouriteMovies(data_fav){
 
 
 function showMovieDetails(id){
-    window.location = 'detailsFav?movie_id=' + id;
+    window.location = 'detailsDis?movie_id=' + id;
     return false;
 }
 
-function getFavMovieDetails(){
+function getDisMovieDetails(){
     var url = new URL(window.location.href);
     let movie_id = url.searchParams.get('movie_id'); 
     //console.log(movie_id);
@@ -59,7 +60,7 @@ function getFavMovieDetails(){
 
     const container_button = document.getElementById('container_back_button');
     container_button.innerHTML = '';
-    container_button.innerHTML = '<button id="back_button"><a href="/favourites"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a></button>';
+    container_button.innerHTML = '<button id="back_button"><a href="/dislikes"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a></button>';
 
 
     fetch(movie_details_url).then(res => res.json()).then(movie =>{

@@ -21,7 +21,8 @@ likeMovie.checkIfExists = (newLikeMovie, result) => {
 
     mysql.query("SELECT * FROM movie_likes WHERE user_id = ? AND movie_id = ? ", 
         [newLikeMovie.user_id, newLikeMovie.movie_id], (err, res) => {
-
+        
+        //daca exista la likes
         if(res.length > 0){
             result(true, false);
             return;
@@ -32,5 +33,23 @@ likeMovie.checkIfExists = (newLikeMovie, result) => {
         }
     });
 };
+
+likeMovie.checkIfExistsDislike = (newLikeMovie, result) => {
+
+    mysql.query("SELECT * FROM movie_dislikes WHERE user_id = ? AND movie_id = ? ", 
+        [newLikeMovie.user_id, newLikeMovie.movie_id], (err, res) => {
+
+        //daca exista la dislikes
+        if(res.length > 0){
+            result(true, false);
+            return;
+        }
+        else if(res.length == 0){
+            result(false, true);
+            return;
+        }
+    });
+};
+
 
 module.exports = likeMovie;

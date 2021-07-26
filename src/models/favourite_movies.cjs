@@ -2,6 +2,7 @@ const mysql = require('./mysql.cjs');
 favouriteMovie = function(){}
 
 favouriteMovie.getAll = (user, result) => {
+    
     if(user){
         mysql.query('SELECT * FROM movie_likes WHERE user_id = ?', user, (err, res) => {
             if (err) {

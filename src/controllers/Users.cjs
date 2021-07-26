@@ -1,5 +1,6 @@
 const User = require('../models/user.cjs')
 const FavouriteMovies = require('../models/favourite_movies.cjs')
+const DislikedMovies = require('../models/disliked_movies.cjs')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const express = require('express');
@@ -105,27 +106,72 @@ exports.logoutUser = (req, res) => {
 exports.profileUser = (req, res) => {
 
     const user_id = req.session.userId;
-    
+
     FavouriteMovies.getAll(user_id, (err, data) => {
         if(data == 'no favourites'){
             var fav = []
-            res.render('profile', {
-                favourites: false,
-                user: req.session.username,
-                data: fav
-            })
+            DislikedMovies.getAll(user_id, (err, data) => {
+                if(data == 'no disliked'){
+                    var dis = []
+                    res.render('profile', {
+                        dislikes: false,
+                        favourites: false,
+                        user: req.session.username,
+                        data_d: dis,
+                        data_f: fav
+                    })
+                }
+                else{
+                    
+                    var dis = []
+                    for(let i = 0; i < data.length; i++){
+                        dis.push(data[i].movie_id)
+                    }
+                    res.render('profile', {
+                        dislikes: true,
+                        favourite: false,
+                        data_d: dis,
+                        data_f: fav,
+                        user: req.session.username
+                    })
+                }
+            });
+            
         }
-        else{
+        else{   
             
             var fav = []
             for(let i = 0; i < data.length; i++){
                 fav.push(data[i].movie_id)
             }
-            res.render('profile', {
-                favourites: true,
-                data: fav,
-                user: req.session.username
+            DislikedMovies.getAll(user_id, (err, data) => {
+                if(data == 'no disliked'){
+                    var dis = []
+                    res.render('profile', {
+                        dislikes: false,
+                        favourites: true,
+                        user: req.session.username,
+                        data_d: dis,
+                        data_f: fav
+                    })
+                }
+                else{
+                    
+                    var dis = []
+                    for(let i = 0; i < data.length; i++){
+                        dis.push(data[i].movie_id)
+                    }
+                    res.render('profile', {
+                        dislikes: true,
+                        favourite: true,
+                        data_d: dis,
+                        data_f: fav,
+                        user: req.session.username
+                    })
+                }
             })
         }
     });
+
+    
 }
