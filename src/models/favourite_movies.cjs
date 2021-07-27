@@ -22,8 +22,7 @@ favouriteMovie.getAll = (user, result) => {
 }
 
 favouriteMovie.getUsers = (movie_ids, user_id, result) => {
-    console.log("MOVIE IDS!!!!!");
-    console.log(movie_ids);
+    
     mysql.query('SELECT * FROM movie_likes WHERE movie_id IN ( ' + movie_ids.join() + ') AND user_id != ?', 
                 user_id, (err, res) => {
         if (err) {

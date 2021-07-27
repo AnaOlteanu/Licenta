@@ -111,8 +111,9 @@ exports.profileUser = (req, res) => {
         if(data == 'no favourites'){
             var fav = []
             DislikedMovies.getAll(user_id, (err, data) => {
-                if(data == 'no disliked'){
+                if(err == true){
                     var dis = []
+                    console.log("AM AJUNS");
                     res.render('profile', {
                         dislikes: false,
                         favourites: false,
@@ -145,7 +146,7 @@ exports.profileUser = (req, res) => {
                 fav.push(data[i].movie_id)
             }
             DislikedMovies.getAll(user_id, (err, data) => {
-                if(data == 'no disliked'){
+                if(data == 'no dislikes'){
                     var dis = []
                     res.render('profile', {
                         dislikes: false,

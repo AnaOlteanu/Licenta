@@ -92,6 +92,7 @@ function getFavouriteMovies(data_fav){
 }
 
 function getDislikedMovies(data_dis){
+    console.log(data_dis)
     main2.innerHTML = '';
     const movie_el = document.createElement('div');
     movie_el.classList.add('row');
@@ -113,7 +114,7 @@ function getDislikedMovies(data_dis){
         const no_fav = document.createElement('div');
         no_fav.setAttribute("id", "no-fav");
         no_fav.classList.add('container-no-fav');
-        no_fav.innerHTML = 'No favourites yet! <a href="/home">Like some of our movies first!</a>'
+        no_fav.innerHTML = 'No dislikes yet! <a href="/home">Dislike some of our movies first!</a>'
         main2.appendChild(no_fav);
     }
 

@@ -28,11 +28,9 @@ exports.getRecommendations = async (req, res) => {
                 }
                 
             }
+            
 
-            console.log("FAV MOVIES");
-            console.log(favourite_movies);
-            console.log("ALL MOVIES");
-            console.log(all_movies_user);
+        
 
             await DislikedMovies.getAll(user_id, async (err, data) => {
 
@@ -42,7 +40,8 @@ exports.getRecommendations = async (req, res) => {
                         all_movies_user.push(data[i].movie_id);
                     }
                 }
-               
+                
+
 
                 nr_movies = favourite_movies.length + disliked_movies.length;
 
@@ -68,7 +67,7 @@ exports.getRecommendations = async (req, res) => {
                     var other_users_dislikes = [];
                     
                     await DislikedMovies.getUsers(all_movies_user, user_id, async (err, data) => {
-            
+                        
                         if(err == false){
 
                             var nr_other_users = 0;
@@ -78,29 +77,29 @@ exports.getRecommendations = async (req, res) => {
                                 other_users_dislikes.push(data[0].user_id)
                             }
                             else{
-                                for(let i = 1; i < data.length; i++){
+                                for(let i = 0; i < data.length ; i++){
                                     nr_other_users ++;
                                     other_users_dislikes.push(data[i].user_id)
-                                    while(data[i].user_id != data[i-1].user_id){
+                                    while(i + 1 < data.length && data[i].user_id == data[i+1].user_id){
                                         i++;
                                     }
                                 }
                                 
                             }
+                            
                        
 
                             for(let i = 0; i < other_users_dislikes.length; i++){
                                 matrix[i + 2] = new Array(nr_movies + 1).fill(0);
                                 matrix[i + 2][0] = other_users_dislikes[i];
                             }
+                            
                         
                         }
 
 
                         await FavouriteMovies.getUsers(all_movies_user, user_id, async (err, data) => {
-                            console.log('USERS LIKES');
-                            console.log(data);
-
+                            
                             if(err == false){
                                 for(let i = 0; i < data.length; i++){
                                     let crt_other_user = data[i].user_id;
@@ -116,17 +115,18 @@ exports.getRecommendations = async (req, res) => {
                                                 }
                                             }
                                         }
-                                        else if(!flag){
-                                            matrix[j + 1] = new Array(nr_movies + 1).fill(0);
-                                            matrix[j + 1][0] = crt_other_user;
-                                            
-                                            for(let k = 1; k < nr_movies + 1; k++){
-                                                if(matrix[0][k] == crt_other_fav){
-                                                    matrix[j + 1][k] = 1;
-                                                }
+                                        
+                                    }
+                                    if(!flag){
+                                        matrix[l] = new Array(nr_movies + 1).fill(0);
+                                        matrix[l][0] = crt_other_user;
+                                        
+                                        for(let k = 1; k < nr_movies + 1; k++){
+                                            if(matrix[0][k] == crt_other_fav){
+                                                matrix[l][k] = 1;
                                             }
-                                           
                                         }
+                                       
                                     }
                                 }
                  
@@ -192,28 +192,33 @@ exports.getRecommendations = async (req, res) => {
                                 var fav = [];
                                 var dis = [];
                                 const iterator = scor_similaritate.keys();
-                                for(let i = 0; i < k_users; i++){
+                                for(let i = 0; i < 1; i++){
                                     var k_user = iterator.next().value;
+                                    console.log("USER ID OTHER");
+                                    console.log(k_user);
                                     await FavouriteMovies.getDifferentLikedMovies(all_movies_user, user_id, k_user, async(err, data) => {
+                                        console.log("FAVOURITE OTHERS");
+                                        console.log(data);
                                         if(err == false){
                                             for(let j = 0; j < data.length; j++){
                                                 
                                                 if(!fav.includes(data[j].movie_id))
                                                     fav.push(data[j].movie_id);
                                             }
-                                            console.log("FAV " + fav)
+                                            
                                             await DislikedMovies.getDifferentDislikedMovies(all_movies_user, user_id, k_user, async (err, data) => {
+                                                console.log("DISLIKED OTHER");
                                                 console.log(data);
                                                 if(err == false){
                                                     for(let j = 0; j < data.length; j++){
-                                                        if(!dis.includes(data[i].movie_id))
+                                                        if(!dis.includes(data[j].movie_id))
                                                             dis.push(data[j].movie_id);
                                                     }
                                                    ;
                                                 }
-                                                console.log(fav);
-                                                console.log(dis);
+                                               
                                                 var recommended_movies = fav.concat(dis);
+                                            
                                                 if(recommended_movies.length > 0){
                                                     res.render('recommendations', {
                                                         recommendation: true,
@@ -246,6 +251,12 @@ exports.getRecommendations = async (req, res) => {
                         
                     })
                     
+                } else {
+                    res.render('recommendations', {
+                        recommendation: false,
+                        rec_movies: [],
+                        user: req.session.username
+                    })
                 }
 
 
