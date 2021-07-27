@@ -133,7 +133,7 @@ exports.getRecommendations = async (req, res) => {
                             }
                             console.table(matrix);
                                 
-                            var scor_similaritate = new Map();
+                            var scor_similaritate = [];
                             var scor_valid = true;
 
                             if(matrix.length == 2){
@@ -165,8 +165,10 @@ exports.getRecommendations = async (req, res) => {
                                         
                                     }
                                     var index_similaritate = (nr_likeuri_comune + nr_dislikeuri_comune - nr_likeuri_diferite - nr_dislikeuri_diferite)/(nr_movies); 
-                    
-                                    scor_similaritate.set(matrix[i][0], index_similaritate);
+                                    var obj = {};
+                                    obj['user_id'] = matrix[i][0];
+                                    obj['scor'] = index_similaritate;
+                                    scor_similaritate.push(obj);
                                     console.log(scor_similaritate);
                                 }
                             }
@@ -174,11 +176,9 @@ exports.getRecommendations = async (req, res) => {
                             if(scor_valid){
                                 var k_users = 1;
                                 
-                                if(scor_similaritate.size > 1){
-                                    scor_similaritate[Symbol.iterator] = function* () {
-                                        yield* [...this.entries()].sort((a, b) => b[1] - a[1]);
-                                    }
-                                    console.log([...scor_similaritate]); 
+                                if(scor_similaritate.length > 1){
+                                    scor_similaritate.sort((a, b) => a.scor > b.scor)
+                                    console.log("SORT ", scor_similaritate); 
                                     
                                     if(scor_similaritate.size <= 4){
                                         k_users = scor_similaritate.size;
@@ -191,9 +191,10 @@ exports.getRecommendations = async (req, res) => {
 
                                 var fav = [];
                                 var dis = [];
-                                const iterator = scor_similaritate.keys();
+                                var k_user = scor_similaritate[0].user_id;
+                               
                                 for(let i = 0; i < 1; i++){
-                                    var k_user = iterator.next().value;
+                                    
                                     console.log("USER ID OTHER");
                                     console.log(k_user);
                                     await FavouriteMovies.getDifferentLikedMovies(all_movies_user, user_id, k_user, async(err, data) => {
@@ -233,6 +234,12 @@ exports.getRecommendations = async (req, res) => {
                                                     })
                                                 }
 
+                                            })
+                                        } else {
+                                            res.render('recommendations', {
+                                                recommendation: false,
+                                                rec_movies: [],
+                                                user: req.session.username
                                             })
                                         }
                                     })
