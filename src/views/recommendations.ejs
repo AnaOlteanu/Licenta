@@ -9,3 +9,79 @@
     <link href='https://fonts.googleapis.com/css?family=Andika' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/home">Movies4U</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/home">Home</a>
+              </li>
+              <% if (user) { %>
+                <li class="nav-item">
+                  <a class="nav-link" href="users/logout">Logout</a>
+                </li>
+            <%} else {%>
+                <li class="nav-item">
+                  <a class="nav-link" href="users/login">Login</a>
+                </li>
+            <% } %>
+              <li class="nav-item">
+                <a class="nav-link" href="/users/register">Register</a>
+              </li>
+              <% if (!user) { %>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Admins
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="/admins/login">Login</a></li>
+                    <li><a class="dropdown-item" href="/admins/create-admin">Add admin</a></li>
+                  </ul>
+                </li>
+            <%} %>
+            <li class="nav-item">
+                  <a class="nav-link" href="/favourites">Favourites</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dislikes">Dislikes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="active-page" href="/recommendations">My recommendations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-page" href="/profile">My profile</a>
+            </li>
+  
+              
+          
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-banner" id="id-container-banner">
+        <% if (!recommendation) { %>
+            <h3 class="banner-title" id="banner-2">You don't have any recommendations yet! Like or dislike some of our movies first!</h3>
+        <%} else {%>
+                <h1 class="banner-title" id="banner">Here are your recommended movies based on other users preferences!</h1>
+                <div id="main"></div>
+            </div>
+        <% } %>
+      </div>
+
+      <script src="../scripts/recommendations.js"></script>
+      <script>
+            var recommended_movies = <%- JSON.stringify(rec_movies) %>;
+            getFavouriteMovies(recommended_movies);
+        
+      </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
