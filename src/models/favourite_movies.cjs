@@ -41,12 +41,11 @@ favouriteMovie.getUsers = (movie_ids, user_id, result) => {
 
 }
 
-favouriteMovie.getDifferentLikedMovies = (movie_ids, user_id, k_user, result) => {
+favouriteMovie.getDifferentLikedMovies = (movie_ids, user_id, k_users, result) => {
 
-    mysql.query('SELECT * FROM movie_likes WHERE movie_id NOT IN ( ' + movie_ids.join() + ') AND user_id != ? AND user_id = ?', 
-                        [user_id, k_user], (err, res) =>{
+    mysql.query('SELECT * FROM movie_likes WHERE movie_id NOT IN ( ' + movie_ids.join() + ') AND user_id != ? AND user_id IN ( ' + k_users.join() + ' )', 
+                        user_id, (err, res) =>{
         if (err) {
-            console.log("error: ", err);
             result(err, null);
             return;
         }
@@ -59,6 +58,20 @@ favouriteMovie.getDifferentLikedMovies = (movie_ids, user_id, k_user, result) =>
         };    
 
         });
+}
+
+favouriteMovie.deleteFav = (movie_id, user_id, result) => {
+    mysql.query("DELETE FROM movie_likes WHERE movie_id = ? AND user_id = ?", [movie_id, user_id], (err, res) => {
+        console.log(res);
+        if(err){
+            result(err, null);
+            return;
+        }
+        else{
+            result(false, 'row deleted')
+            return;
+        }
+    })
 }
 
 module.exports = favouriteMovie;

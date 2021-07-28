@@ -63,6 +63,36 @@ app.get('/details', (req, res) => {
     }
 })
 
+app.get('/searchedMovies', (req, res) => {
+    if(req.session.loggedin){
+        res.render('search' , { 
+            isLoggedIn: true,
+            user: req.session.username
+        })
+    }
+    else{
+        res.render('search',{
+            isLoggedIn: false,
+            user: req.session.username
+        })
+    }
+})
+
+app.get('/detailsSearched', (req, res) => {
+    if(req.session.loggedin){
+        res.render('search-details' , { 
+            isLoggedIn: true,
+            user: req.session.username
+        })
+    }
+    else{
+        res.render('search-details',{
+            isLoggedIn: false,
+            user: req.session.username
+        })
+    }
+})
+
 //admin routes
 app.use(adminRoutes);
 

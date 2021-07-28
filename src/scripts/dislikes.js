@@ -136,7 +136,18 @@ function getDisMovieDetails(){
         titlu.style.color = 'white';
 
         details_right.appendChild(titlu);
- 
+
+        const remove = document.createElement('div');
+        remove.classList.add('remove-container');
+
+        const removeBtn = document.createElement('button');
+        removeBtn.setAttribute("onclick", `removeDislike(${movie_id})`);
+        removeBtn.setAttribute('id', 'remove-btn');
+        removeBtn.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i><p class = "text">Remove from Dislikes</p>';
+        removeBtn.style.fontSize = '40px';
+        remove.appendChild(removeBtn);
+        
+        details_right.appendChild(remove);
         details_right.appendChild(lista);
 
         const jumbotron_text = document.createElement('div');
@@ -172,5 +183,29 @@ function getDisMovieDetails(){
 
 
 }
+
+function removeDislike(movie_id){
+    fetch('/removeDislike', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify({ 
+            movie_id: movie_id
+        })
+    }).then(res => res.json()).then(data => {
+        if(data.status === "success"){
+            const removeBtn = document.getElementById('remove-btn');
+            removeBtn.style.display = 'none';
+            const removeContainer = document.getElementsByClassName('remove-container');
+            const removedMessage = document.createElement('h5');
+            removedMessage.classList.add('alert');
+            removedMessage.classList.add('alert-danger');
+            removedMessage.innerHTML = 'You deleted this movie from favourites!';
+            removeContainer[0].appendChild(removedMessage);
+        }
+    })
+}
+
 
 

@@ -29,3 +29,19 @@ exports.showFavourites = (req, res) => {
     });
 
 }
+
+exports.deleteFavourite = (req, res) => {
+    var movie_id = req.body.movie_id;
+    var user_id = req.session.userId;
+
+    FavouriteMovie.deleteFav(movie_id, user_id, (err, data) => {
+        if(err){
+            console.log(err);
+        } else if(err == false){
+            res.status(200).json({
+                status: 'success',
+                message: 'ok' 
+            });
+        }
+    })
+}

@@ -10,17 +10,17 @@ router.get('/detailsFav', (req, res) => {
     if(req.session.loggedin){
         res.render('favourite-details' , { 
             isLoggedIn: true,
-            already_like: req.session.already_liked,
             user: req.session.username
         })
     }
     else{
         res.render('favourite-details',{
             isLoggedIn: false,
-            already_like:  req.session.already_liked,
             user: req.session.username
         })
     }
 })
+
+router.delete('/removeFavourite', favouriteMovieController.deleteFavourite);
 
 module.exports = router;

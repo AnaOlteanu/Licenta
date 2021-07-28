@@ -29,3 +29,19 @@ exports.showDislikes = (req, res) => {
     });
 
 }
+
+exports.deleteDislike = (req, res) => {
+    var movie_id = req.body.movie_id;
+    var user_id = req.session.userId;
+
+    DislikedMovie.deleteDis(movie_id, user_id, (err, data) => {
+        if(err){
+            console.log(err);
+        } else if(err == false){
+            res.status(200).json({
+                status: 'success',
+                message: 'ok' 
+            });
+        }
+    })
+}

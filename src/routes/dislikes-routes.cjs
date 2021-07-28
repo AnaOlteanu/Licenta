@@ -21,4 +21,6 @@ router.get('/detailsDis', (req, res) => {
     }
 })
 
+router.delete('/removeDislike', dislikedMovieController.deleteDislike);
+
 module.exports = router;

@@ -1,27 +1,3 @@
-.banner-title{
-    color: rgb(255, 255, 255);
-    text-align: center;
-    font-family: 'Cabin Sketch';
-    
-}
-
-#banner-2{
-    color:rgb(201, 60, 35);
-}
-
-#active-page{
-    color: rgb(201, 60, 35) !important;
-}
-
-.container-banner{
-    padding: 10px;
-    margin-top: 4rem;
-}
-
-.card{
-    background: rgba(0, 0, 0, 0.7) !important;
-}
-
 #remove-btn{
     color: white;
     background-color: Transparent;
