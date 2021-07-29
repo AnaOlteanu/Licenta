@@ -23,6 +23,7 @@ function usersTable(users){
 
     for(let i = 0; i < users.length; i++){
         var tr = document.createElement('tr');
+        tr.setAttribute('id', 'row' + `${i}`);
         var th = document.createElement('th');
         th.setAttribute('scope', 'row');
         var nr = i + 1;
@@ -31,7 +32,9 @@ function usersTable(users){
         var username = users[i];
         td_user.innerHTML = `${username}`;
         var td_delete = document.createElement('td');
-        td_delete.innerHTML = `<button class="btn btn-outline-success" onclick="deleteUser('${username}','${i + 1}')">Delete</button>`;
+
+        var row_no = i;
+        td_delete.innerHTML = `<button class="btn btn-outline-success" onclick="deleteUser('${username}', '${row_no}')">Delete</button>`;
         tr.appendChild(th);
         tr.appendChild(td_user);
         tr.appendChild(td_delete);
@@ -43,7 +46,7 @@ function usersTable(users){
     
 }
 
-function deleteUser(username,i){
+function deleteUser(username, nr){
 
     fetch('/admins/deleteUser', {
         method: 'DELETE',
@@ -56,7 +59,7 @@ function deleteUser(username,i){
     }).then(res => res.json()).then(data =>{
        if(data.status == 'success'){
            var table = document.getElementsByClassName('table');
-           table[0].deleteRow(i);
+           document.getElementById("row" + nr + "").outerHTML = "";
        }
       
     })
@@ -73,10 +76,6 @@ function setQuote(){
             admin_id: admin_id,
             quote: quote
         })
-    }).then(res => res.json()).then(data =>{
-       if(data.status == 'success'){
-           
-       }
-      
     })
+      
 }
