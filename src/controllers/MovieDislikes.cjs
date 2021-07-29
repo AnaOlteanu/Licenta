@@ -59,3 +59,18 @@ exports.getDislikeButton = async (req, res) => {
 
 }
 
+
+exports.getCountDislikes = (req, res) => {
+    var movie_id = req.query.movie_id;
+    MovieDislike.getNumberDislikes(movie_id, (err, data) => {
+        if(err == false){
+            res.status(200).json({
+                status: 'success',
+                number: data
+            });
+        }
+    })
+}
+
+
+

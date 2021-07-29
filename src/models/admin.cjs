@@ -34,6 +34,7 @@ Admin.create = (newAdmin, result) => {
 }
 
 Admin.login = (admin, result) => {
+
     mysql.query("SELECT * FROM admins WHERE username = ?", admin.username, async (err, res) => {
 
         if(res.length == 0){
@@ -58,6 +59,24 @@ Admin.login = (admin, result) => {
             //res.status(500).send()
         }
     })
+}
+
+Admin.checkIfExists = (username, result) => {
+    mysql.query("SELECT * FROM admins WHERE username = ? " , username , (err, res) => {
+    
+        if(err){
+            result(err, null);
+            return;
+        }
+        if(res.length > 0){
+            result(null, 'exista');
+            return;
+        }
+        else if(res.length == 0){
+            result(null, 'nu exista');
+            return;
+        }
+    });
 }
 
 module.exports = Admin;

@@ -133,6 +133,8 @@ function getMovie(){
         const like_btns = document.createElement('div');
         like_btns.classList.add('like-btns');
 
+        const nr_likes = document.createElement('div');
+        nr_likes.classList.add('nr-likes');
 
         const titlu = document.createElement('h1');
         titlu.innerHTML = `<h1 class="display-1">${title}</h1>`;
@@ -140,6 +142,7 @@ function getMovie(){
         titlu.style.color = 'white';
 
         details_right.appendChild(titlu);
+        details_right.appendChild(nr_likes);
         details_right.appendChild(like_btns);
         details_right.appendChild(lista);
 
@@ -171,7 +174,23 @@ function getMovie(){
         det_row.appendChild(jumbotron_text);
         det.appendChild(det_row);
 
-        let alreadyLiked = false;
+
+        fetch('/getCountLikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+            if(data.status == "success"){
+                var nr_likes = data.number;
+                fetch('/getCountDislikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                    if(data.status == "success"){
+                        var nr_dislikes = data.number;
+                        const nrLikesContainer = document.getElementsByClassName('nr-likes');
+                        const nrLikes = document.createElement('div');
+                        nrLikes.setAttribute('id', 'nr_likes_dislikes');
+                        nrLikes.innerHTML = `${nr_likes} likes ${nr_dislikes} dislikes`;
+                        nrLikesContainer[0].appendChild(nrLikes);
+                    }
+                })
+            }
+        })
+        
 
         fetch('/getLikeButton?movie_id=' + movie_id).then(res => res.json()).then(data => {
     
@@ -211,7 +230,7 @@ function getMovie(){
                 
             } else {
                 const likeBtns = document.getElementsByClassName('like-btns');
-                alreadyLiked = true;
+              
                 const alreadyLikedMessage= document.createElement('h5');
                 alreadyLikedMessage.classList.add('alert');
                 alreadyLikedMessage.classList.add('alert-success');
@@ -231,39 +250,11 @@ function getMovie(){
 function showSearchedMovies(){
     const input_search = document.getElementById('inputSearch'); 
     const value = input_search.value;
-    // console.log(value);
     window.location = 'searchedMovies?movie_name=' + value;
     return false;
 
 }
 
-const button_search = document.getElementById('search');
-const input_search = document.getElementById('inputSearch');
-const banner = document.getElementById('banner');
-const container_banner = document.getElementById('id-container-banner');
-
-// button_search.onclick = function(event){
-//     event.preventDefault();
-//     const value = input_search.value;
-//     const searchUrl = tmdb_api + '/search/movie?' + api_key + '&query=' + value;
-//     console.log(value)
-    
-
-    // fetch(searchUrl).then((res) => res.json())
-    //     .then((data) => {
-    //         showMovies(data.results);
-            
-    //         banner.innerHTML = '';
-    //         banner.innerHTML = 'You searched for movie ' + `<strong>'${value}'</strong>`;
-            
-    //         var movie_arr = []
-    //         data.results.forEach(movie =>{
-    //             movie_arr.push(movie.id);
-    //         })
-            
-
-//         })
-// }
 
 function likeMovie(movie_id){
     fetch('/likeMovie', {
@@ -286,6 +277,22 @@ function likeMovie(movie_id){
             alreadyLikedMessage.classList.add('alert-success');
             alreadyLikedMessage.innerHTML = 'You added the movie to your favourites!';
             likeBtns[0].appendChild(alreadyLikedMessage);
+
+            fetch('/getCountLikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                if(data.status == "success"){
+                    var nr_likes = data.number;
+                    fetch('/getCountDislikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                        if(data.status == "success"){
+                            var nr_dislikes = data.number;
+                            const nrLikesContainer = document.getElementsByClassName('nr-likes');
+                            const nrLikes = document.getElementById('nr_likes_dislikes');
+                            nr_likes.innerHTML = '';
+                            nrLikes.innerHTML = `${nr_likes} likes ${nr_dislikes} dislikes`;
+                            nrLikesContainer[0].appendChild(nrLikes);
+                        }
+                    })
+                }
+                })
         }
     })
 }
@@ -311,6 +318,22 @@ function dislikeMovie(movie_id){
             alreadyDislikedMessage.classList.add('alert-danger');
             alreadyDislikedMessage.innerHTML = 'You disliked this movie!';
             likeBtns[0].appendChild(alreadyDislikedMessage);
+
+            fetch('/getCountLikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                if(data.status == "success"){
+                    var nr_likes = data.number;
+                    fetch('/getCountDislikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                        if(data.status == "success"){
+                            var nr_dislikes = data.number;
+                            const nrLikesContainer = document.getElementsByClassName('nr-likes');
+                            const nrLikes = document.getElementById('nr_likes_dislikes');
+                            nr_likes.innerHTML = '';
+                            nrLikes.innerHTML = `${nr_likes} likes ${nr_dislikes} dislikes`;
+                            nrLikesContainer[0].appendChild(nrLikes);
+                        }
+                    })
+                }
+                })
         }
     })
 }

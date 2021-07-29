@@ -23,33 +23,60 @@ exports.registerUser = async (req, res) => {
     const {username, password} = req.body;
     if (!req.body.username|| !req.body.password) {
         return res.render('register', {
-            message: "Please provide an username and a password!"
+            message: "Please provide an username and a password!",
+            user: req.session.username
             });
     }
-    else if(emailValidator.validate(username) == false){
-        res.render('register', {
-            message: "Please provide a correct email address!"
-        })
-    }
-    else if(schema.validate(password) == false){
-        res.render('register', {
-            message: "Please provide a minimum 3 character password!"
-        })
-    }
-    else{
-        const salt = await bcrypt.genSalt()
-        const hashedPassword = await bcrypt.hash(password, salt);
-        const user = new User({username: username, password: hashedPassword});
-        User.create(user, (err, data) => {
-            if (err)
-            res.render('register', {
-                message: "Some error occurred while creating the user."
-            })
-            else {
-                res.redirect('/users/login');
+    
+    try{
+        await User.checkIfExists(username, async (err, data) => {
+            console.log(data);
+            if(!err && data == 'nu exista'){
+                if(emailValidator.validate(username) == false){
+                    res.render('register', {
+                        message: "Please provide a correct email address!",
+                        user: req.session.username
+                    })
+                } else if(schema.validate(password) == false){
+                    res.render('register', {
+                        message: "Please provide a minimum 3 character password!",
+                        user: req.session.username
+                    })
+                } else {
+                    const salt = await bcrypt.genSalt()
+                    const hashedPassword = await bcrypt.hash(password, salt);
+                    const user = new User({username: username, password: hashedPassword});
+                    await User.create(user, (err, data) => {
+                        if (err)
+                        res.render('register', {
+                            message: "Some error occurred while creating the user.",
+                            user: req.session.username
+                        })
+                        else {
+                            res.redirect('/users/login');
+                        }
+                    })
+                }
+            }
+            else if(!err && data == 'exista'){
+                res.render('register', {
+                    message: 'Username already exists!',
+                    user: req.session.username
+                })
+            } 
+            else if(err){
+                res.render('register', {
+                    message: 'Some error occured with the database!',
+                    user: req.session.username
+                })
             }
         })
+
+
+    } catch(e){
+        console.log(e);
     }
+    
 
 }
 

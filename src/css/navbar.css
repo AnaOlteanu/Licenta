@@ -15,9 +15,17 @@ body{
 }
 
 #profile-page{
-    color: rgb(238, 217, 27);
+    color: rgb(236, 229, 172);
+}
+
+#profile-page:hover{
+    color: rgb(241, 218, 4);
 }
 
 #recommendation-page{
-    color: rgb(26, 158, 9);
+    color: rgb(141, 224, 176);
+}
+
+#recommendation-page:hover{
+    color: rgb(7, 185, 81);
 }

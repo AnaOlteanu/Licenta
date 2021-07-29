@@ -177,7 +177,7 @@ exports.getRecommendations = async (req, res) => {
                                 var nr_k_users = 1;
                                 
                                 if(scor_similaritate.length > 1){
-                                    scor_similaritate.sort((a, b) => a.scor > b.scor)
+                                    scor_similaritate.sort((a, b) => (a.scor > b.scor) ? -1 : ((b.scor > a.scor) ? 1 : 0))
                                     console.log("SORT ", scor_similaritate); 
                                     
                                     if(scor_similaritate.length <= 4){

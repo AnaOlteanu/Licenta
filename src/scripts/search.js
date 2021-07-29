@@ -75,9 +75,6 @@ function getSearchedMovieDetails(){
  
     let movie_details_url = tmdb_api + '/movie/' + movie_id + '?' + api_key;
 
-    
-
-
     fetch(movie_details_url).then(res => res.json()).then(movie =>{
 
         const {title,poster_path,release_date, overview, id, production_companies, genres} = movie;
@@ -154,7 +151,11 @@ function getSearchedMovieDetails(){
         titlu.style.marginTop = '7%';
         titlu.style.color = 'white';
 
+        const nr_likes = document.createElement('div');
+        nr_likes.classList.add('nr-likes');
+
         details_right.appendChild(titlu);
+        details_right.appendChild(nr_likes);
         details_right.appendChild(like_btns);
         details_right.appendChild(lista);
 
@@ -185,6 +186,22 @@ function getSearchedMovieDetails(){
         jumbotron_text.appendChild(rand);
         det_row.appendChild(jumbotron_text);
         det.appendChild(det_row);
+
+        fetch('/getCountLikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+            if(data.status == "success"){
+                var nr_likes = data.number;
+                fetch('/getCountDislikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                    if(data.status == "success"){
+                        var nr_dislikes = data.number;
+                        const nrLikesContainer = document.getElementsByClassName('nr-likes');
+                        const nrLikes = document.createElement('div');
+                        nrLikes.setAttribute('id', 'nr_likes_dislikes');
+                        nrLikes.innerHTML = `${nr_likes} likes ${nr_dislikes} dislikes`;
+                        nrLikesContainer[0].appendChild(nrLikes);
+                    }
+                })
+            }
+        })
 
         fetch('/getLikeButton?movie_id=' + movie_id).then(res => res.json()).then(data => {
     
@@ -261,6 +278,22 @@ function likeMovie(movie_id){
             alreadyLikedMessage.classList.add('alert-success');
             alreadyLikedMessage.innerHTML = 'You added the movie to your favourites!';
             likeBtns[0].appendChild(alreadyLikedMessage);
+
+            fetch('/getCountLikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                if(data.status == "success"){
+                    var nr_likes = data.number;
+                    fetch('/getCountDislikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                        if(data.status == "success"){
+                            var nr_dislikes = data.number;
+                            const nrLikesContainer = document.getElementsByClassName('nr-likes');
+                            const nrLikes = document.getElementById('nr_likes_dislikes');
+                            nr_likes.innerHTML = '';
+                            nrLikes.innerHTML = `${nr_likes} likes ${nr_dislikes} dislikes`;
+                            nrLikesContainer[0].appendChild(nrLikes);
+                        }
+                    })
+                }
+                })
         }
     })
 }
@@ -286,6 +319,22 @@ function dislikeMovie(movie_id){
             alreadyDislikedMessage.classList.add('alert-danger');
             alreadyDislikedMessage.innerHTML = 'You disliked this movie!';
             likeBtns[0].appendChild(alreadyDislikedMessage);
+
+            fetch('/getCountLikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                if(data.status == "success"){
+                    var nr_likes = data.number;
+                    fetch('/getCountDislikes?movie_id=' + movie_id).then(res => res.json()).then(data => {
+                        if(data.status == "success"){
+                            var nr_dislikes = data.number;
+                            const nrLikesContainer = document.getElementsByClassName('nr-likes');
+                            const nrLikes = document.getElementById('nr_likes_dislikes');
+                            nr_likes.innerHTML = '';
+                            nrLikes.innerHTML = `${nr_likes} likes ${nr_dislikes} dislikes`;
+                            nrLikesContainer[0].appendChild(nrLikes);
+                        }
+                    })
+                }
+                })
         }
     })
 }

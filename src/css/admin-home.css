@@ -1,0 +1,69 @@
+.container-banner{
+    padding: 10px;
+    margin-top: 4rem;
+}
+
+.banner-title{
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-family: 'Cabin Sketch';
+    
+}
+
+#banner-2{
+    color:rgb(201, 60, 35);
+}
+
+#active-page{
+    color: rgb(201, 60, 35) !important;
+}
+
+
+.logout-banner{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+
+}
+.logout-banner:hover{
+    color:rgb(228, 228, 18);
+}
+
+.container-info{
+    margin: 3%;
+    padding: 2%;
+    background: rgba(0,0,0,0.7);
+}
+
+.info-text{
+    color:white;
+    font-size: 25px;
+    font-family: 'Chivo';
+}
+
+.list-attributes{
+    color:white;
+    font-size: 20px;
+    font-family: 'Sulphur Point';
+    list-style: none;
+    counter-reset: li;
+}
+
+.list-attributes li::before{
+    content: counter(li); 
+    color: rgb(209, 69, 27);
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+}
+
+.list-attributes li{
+    counter-increment: li
+}
+
+#table-container{
+    margin: 3%;
+}
+
+.table{
+    color:white !important;
+}

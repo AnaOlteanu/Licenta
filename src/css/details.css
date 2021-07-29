@@ -31,9 +31,25 @@
 }
 
 .like-btn:hover{
-    color: rgb(14, 168, 8) !important;
+    color: rgb(8, 117, 35) !important;
 }
 
 .dislike-btn:hover{
-    color: rgb(230, 11, 11) !important;
+    color: rgb(175, 10, 10) !important;
+}
+
+#nr_likes_dislikes{
+    color: white;
+}
+
+.list-group{
+    font-size: 20px;
+}
+
+.nr-likes{
+    font-size: 18px;
+    
+}
+#nr_likes_dislikes{
+    color: rgb(223, 178, 165);
 }

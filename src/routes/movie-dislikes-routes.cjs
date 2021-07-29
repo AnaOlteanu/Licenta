@@ -7,4 +7,6 @@ router.post('/dislikeMovie', movieDislikesController.addMovieDislike);
 
 router.get('/getDislikeButton', movieDislikesController.getDislikeButton);
 
+router.get('/getCountDislikes', movieDislikesController.getCountDislikes);
+
 module.exports = router;

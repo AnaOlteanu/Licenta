@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Movies4U  • Admin Home</title>
+        <link rel = "stylesheet" href="../css/admin-home.css" type="text/css">
+        <link rel = "stylesheet" href="../css/navbar.css">
+        <link href='https://fonts.googleapis.com/css?family=Cabin Sketch' rel='stylesheet'>
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+        <link href='https://fonts.googleapis.com/css?family=Chivo' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Sulphur Point' rel='stylesheet'>
+
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/admins/home">Movies4U</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active"  id="active-page" aria-current="page" href="/admins/home">Home</a>
+                    </li>
+                    <% if (admin) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admins/logout">Logout</a>
+                        </li>                    
+                    <%} %>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admins/create-admin">Add admin</a>
+                    </li>
+                
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+          <div class="container-banner" id="id-container-banner">
+            <h1 class="banner-title" id="banner">This is the Admin's page!</h1>
+              <h3 class="banner-title" id="banner-2">Welcome, admin <%= admin %>! <a href="/admins/logout" class="logout-banner"> Logout!</a></h3>
+        </div>
+
+        <div class="container-info">
+            <div class="info-text">As an admin, you have some permissions and privileges.</div>
+            <ol class="list-attributes">
+                <li class="list-item">You have access to the database of the Movies4U website. You can <i>delete</i> users due to unappropriate behaviour.</li>
+                <li class="list-item">You can set the 'Quote of the day' that appears on the home page of users.</li>
+            </ol>
+        </div>
+
+        <div id="table-container"></div>
+
+        <script src="../scripts/admin-home.js"></script>
+        <script>
+            var users = <%- JSON.stringify(users) %>;
+            usersTable(users);
+        </script>
+    </body>
+</html>

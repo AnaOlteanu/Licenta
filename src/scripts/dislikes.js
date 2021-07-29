@@ -143,7 +143,7 @@ function getDisMovieDetails(){
         const removeBtn = document.createElement('button');
         removeBtn.setAttribute("onclick", `removeDislike(${movie_id})`);
         removeBtn.setAttribute('id', 'remove-btn');
-        removeBtn.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i><p class = "text">Remove from Dislikes</p>';
+        removeBtn.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
         removeBtn.style.fontSize = '40px';
         remove.appendChild(removeBtn);
         

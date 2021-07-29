@@ -10,7 +10,6 @@ const User = function(user){
 User.getAll = result => {
     mysql.query('SELECT * FROM users', (err, res) => {
         if (err) {
-            console.log("error: ", err);
             result(null, err);
             return;
         }
@@ -32,6 +31,7 @@ User.create = (newUser, result) => {
 }
 
 User.login = (user, result) => {
+
     mysql.query("SELECT * FROM users WHERE username = ?", user.username, async (err, res) => {
 
         if(res.length == 0){
@@ -58,4 +58,23 @@ User.login = (user, result) => {
     })
 }
  
+User.checkIfExists = (username, result) => {
+    
+    mysql.query("SELECT * FROM users WHERE username = ? " , username , (err, res) => {
+    
+        if(err){
+            result(err, null);
+            return;
+        }
+        if(res.length > 0){
+            result(null, 'exista');
+            return;
+        }
+        else if(res.length == 0){
+            result(null, 'nu exista');
+            return;
+        }
+    });
+}
+
 module.exports = User;

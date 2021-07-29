@@ -33,22 +33,19 @@ dislikeMovie.checkIfExists = (newDislikeMovie, result) => {
     });
 };
 
-dislikeMovie.checkIfExistsLike = (newDislikeMovie, result) => {
-
-    mysql.query("SELECT * FROM movie_likes WHERE user_id = ? AND movie_id = ? ", 
-        [newDislikeMovie.user_id, newDislikeMovie.movie_id], (err, res) => {
-
-        //daca exista la likes
+dislikeMovie.getNumberDislikes = (movie_id, result) => {
+    mysql.query("SELECT COUNT(*) AS count FROM movie_dislikes WHERE movie_id = ?", movie_id, (err, res) =>{
+        if(err){
+            result(err, null);
+            return;
+        }
         if(res.length > 0){
-            result(true, false);
+            result(false, res[0].count);
             return;
         }
-        else if(res.length == 0){
-            result(false, true);
-            return;
-        }
-    });
-};
+    })
+}
+
 
 
 module.exports = dislikeMovie;
