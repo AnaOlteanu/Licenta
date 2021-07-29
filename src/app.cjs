@@ -7,6 +7,7 @@ const movieDislikesRoutes = require('./routes/movie-dislikes-routes.cjs');
 const favouriteMoviesRoutes = require('./routes/favourites-routes.cjs');
 const dislikedMoviesRoutes = require('./routes/dislikes-routes.cjs');
 const recommendationRoutes = require('./routes/recommendations-routes.cjs');
+const homeRoutes = require('./routes/home-routes.cjs');
 
 
 
@@ -23,28 +24,28 @@ app.use(express.static(__dirname))
         secret: 'secret',
         resave: true,
         saveUninitialized: true,
-        already_liked: false,
-        adminLoggedIn: false
+        adminLoggedIn: false,
+        adminId: null
     }))
  
 app.get('/', (req, res) => {
     res.render('index')
 });
 
-app.get('/home', (req, res) => {
-    if(req.session.loggedin){
-        res.render('home' , { 
-            user: req.session.username,
-            isLoggedIn: true
-        })
-    }
-    else{
-        res.render('home',{
-            user: '',
-            isLoggedIn: false})
-    }
+// app.get('/home', (req, res) => {
+//     if(req.session.loggedin){
+//         res.render('home' , { 
+//             user: req.session.username,
+//             isLoggedIn: true
+//         })
+//     }
+//     else{
+//         res.render('home',{
+//             user: '',
+//             isLoggedIn: false})
+//     }
     
-})
+// })
 
 app.get('/details', (req, res) => {
     if(req.session.loggedin){
@@ -92,6 +93,8 @@ app.get('/detailsSearched', (req, res) => {
         })
     }
 })
+
+app.use(homeRoutes);
 
 //admin routes
 app.use(adminRoutes);

@@ -79,4 +79,17 @@ Admin.checkIfExists = (username, result) => {
     });
 }
 
+Admin.deleteUser = (username, result) => {
+    console.log(username);
+    mysql.query("DELETE FROM users WHERE username = ?", username, (err, res) => {
+        if(err){
+            result(err, null);
+            return;
+        } else{
+            result(null, res);
+            return;
+        }
+    })
+}
+
 module.exports = Admin;

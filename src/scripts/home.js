@@ -338,3 +338,11 @@ function dislikeMovie(movie_id){
     })
 }
 
+function showQuote(quote){
+    if(quote){
+        var bannerQuote = document.getElementById('banner-quote');
+        bannerQuote.innerHTML = `Quote of the day is: ${quote}`;
+    }
+}
+
+

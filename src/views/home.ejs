@@ -7,6 +7,7 @@
     <link rel = "stylesheet" href="../css/navbar.css">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
     <link href='https://fonts.googleapis.com/css?family=Cabin Sketch' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Give You Glory' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
@@ -73,7 +74,8 @@
     <div class="container-banner" id="id-container-banner">
         <h1 class="banner-title" id="banner">Here are the most popular movies right now!</h1>
         <% if (user) { %>
-          <h3 class="banner-title" id="banner-2">Welcome, user <%= user %>! <a href="users/logout" class="logout-banner"> Logout!</a></h3> 
+          <h3 class="banner-title" id="banner-2">Welcome, user <%= user %>! <a href="users/logout" class="logout-banner"> Logout!</a></h3>
+          <h3 class="banner-title" id="banner-quote"></h3> 
       <%} %>
     </div>
         
@@ -82,6 +84,10 @@
     </div>
     
     <script src="../scripts/home.js"></script>
+    <script>
+      var quote = <%- JSON.stringify(quote) %>;
+      showQuote(quote);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>

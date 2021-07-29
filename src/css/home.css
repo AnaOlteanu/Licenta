@@ -40,3 +40,9 @@ body{
 .logout-banner:hover{
     color:rgb(228, 228, 18);
 }
+
+#banner-quote{
+    color: rgb(245, 227, 177);
+    font-family: 'Give You Glory';
+    font-style: italic;
+}

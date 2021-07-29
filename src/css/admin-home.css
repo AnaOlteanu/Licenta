@@ -67,3 +67,11 @@
 .table{
     color:white !important;
 }
+
+#quote-container{
+    margin: 10%;
+}
+
+#quote-text{
+    margin-right: 10px;
+}

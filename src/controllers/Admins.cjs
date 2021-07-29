@@ -1,5 +1,6 @@
-const Admin = require('../models/admin.cjs')
-const User = require('../models/user.cjs')
+const Admin = require('../models/admin.cjs');
+const User = require('../models/user.cjs');
+const Quote = require('../models/quote.cjs');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const express = require('express');
@@ -140,6 +141,7 @@ exports.loginAdmin = (req, res) => {
                 else {
                     req.session.loggedin = true;
                     req.session.username = data[0].username;
+                    req.session.adminId = data[0].id;
                     req.session.adminLoggedIn = true;
                     res.redirect('/admins/home');
                 }
@@ -158,25 +160,71 @@ exports.logoutAdmin = (req, res) => {
     req.session.loggedin = false;
     req.session.username = '';
     req.session.adminLoggedIn = false;
+    req.session.adminId = '';
     res.redirect('/home');
 }
 
 exports.getHomePage = (req, res) => {
-    User.getAll((err, data) => {
-        if(err){
-            res.render('admins-home', {
-                admin: req.session.username,
-                users: []
-            })
-        } else {
-            var users = []
-            for(let i = 0; i < data.length; i++){
-                users.push(data[i].username);
+
+    if(req.session.adminLoggedIn){
+        User.getAll((err, data) => {
+            if(err){
+                res.render('admins-home', {
+                    admin: req.session.username,
+                    admin_id: req.session.adminId,
+                    users: []
+                })
+            } else {
+                var users = []
+                for(let i = 0; i < data.length; i++){
+                    users.push(data[i].username);
+                }
+                res.render('admins-home', {
+                    admin: req.session.username,
+                    admin_id: req.session.adminId,
+                    users: users
+                })
             }
-            res.render('admins-home', {
-                admin: req.session.username,
-                users: users
-            })
+        });
+    }
+    else{
+        res.redirect('/admins/info')
+    }
+
+    
+    
+}
+
+exports.deleteUser = (req, res) => {
+    var username = req.body.username;
+    console.log(username);
+    Admin.deleteUser(username, (err, data) => {
+        if(err){
+            res.status(200).json({
+                status: 'error'
+            });
+        } else {
+            res.status(200).json({
+                status: 'success'
+            });
         }
-    });
+    })
+}
+
+exports.setQuote = (req, res) => {
+    var admin_id = req.body.admin_id;
+    var quote = req.body.quote;
+
+    console.log(admin_id);
+    console.log(quote);
+
+    const newQuote = new Quote({
+        admin_id: admin_id,
+        quote: quote
+    })
+    
+    Quote.addQuote(newQuote, (err, data) => {
+
+    })
+    
 }

@@ -9,7 +9,6 @@ likeMovie.add = (newLikeMovie, result) => {
 
     mysql.query("INSERT INTO movie_likes SET ?", newLikeMovie, (err, res) => {
         if (err) {
-            console.log("error: ", err);
             result(err, null);
             return;
         }

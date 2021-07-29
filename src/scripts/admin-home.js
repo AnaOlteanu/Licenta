@@ -1,4 +1,5 @@
 function usersTable(users){
+
     var tableContainer = document.getElementById('table-container');
     var table = document.createElement('table');
     table.classList.add("table");
@@ -30,16 +31,52 @@ function usersTable(users){
         var username = users[i];
         td_user.innerHTML = `${username}`;
         var td_delete = document.createElement('td');
-        td_delete.innerHTML = `<button class="btn btn-outline-success" onclick="deleteUser(${username})">Delete</button>`;
+        td_delete.innerHTML = `<button class="btn btn-outline-success" onclick="deleteUser('${username}','${i + 1}')">Delete</button>`;
         tr.appendChild(th);
         tr.appendChild(td_user);
         tr.appendChild(td_delete);
         tbody.appendChild(tr);
     }
-
-
-    
+ 
     table.appendChild(tbody);
     tableContainer.appendChild(table)
     
+}
+
+function deleteUser(username,i){
+
+    fetch('/admins/deleteUser', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify({ 
+            username: username
+        })
+    }).then(res => res.json()).then(data =>{
+       if(data.status == 'success'){
+           var table = document.getElementsByClassName('table');
+           table[0].deleteRow(i);
+       }
+      
+    })
+}
+
+function setQuote(){
+    var quote = document.getElementById('quote-text').value;
+    fetch('/admins/setQuote', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify({ 
+            admin_id: admin_id,
+            quote: quote
+        })
+    }).then(res => res.json()).then(data =>{
+       if(data.status == 'success'){
+           
+       }
+      
+    })
 }
