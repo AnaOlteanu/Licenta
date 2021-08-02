@@ -24,9 +24,6 @@
           <li class="nav-item">
             <a class="nav-link active" id="active-page" aria-current="page" href="/home">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/top10">Top 10 Movies</a>
-          </li>
           <% if (user) { %>
             <li class="nav-item">
               <a class="nav-link" href="users/logout">Logout</a>
@@ -53,8 +50,7 @@
               <a class="nav-link" id="profile-page" href="/profile">My profile</a>
             </li>
         <%} %>
-          
-      
+  
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" id="inputSearch" placeholder="Search" aria-label="Search">
@@ -70,6 +66,13 @@
           <h3 class="banner-title" id="banner-2">Welcome, user <%= user %>! <a href="users/logout" class="logout-banner"> Logout!</a></h3>
           <h3 class="banner-title" id="banner-quote"></h3> 
       <%} %>
+    </div>
+
+    <div id="top10-container">
+      <p id="top10-text">
+        Check out our most liked movies right now!
+        <button class="btn btn-outline-success"><a id="a-top10" href="/top10">Top 10</a></button>
+      </p>
     </div>
         
     <div>

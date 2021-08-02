@@ -4,7 +4,7 @@ const popular_movies_url = tmdb_api + '/discover/movie?sort_by=popularity.desc&'
 const image_url = 'https://image.tmdb.org/t/p/w500';
 
 
-const main = document.getElementById("main");
+
 
 getPopularMovies(popular_movies_url);
 
@@ -21,7 +21,7 @@ function getPopularMovies(url){
 }
 
 function showMovies(data){
-    main.innerHTML = '';
+    const main = document.getElementById("main");
     const movie_el = document.createElement('div');
     movie_el.classList.add('row');
     movie_el.style.margin = "100px";
@@ -156,15 +156,29 @@ function getMovie(){
         rand.classList.add('row');
         rand.style.padding = '1%';
 
+        const containerImage = document.createElement('div');
+        containerImage.classList.add('container-image');
+
         const imag = document.createElement('img');
+        imag.classList.add('image');
         imag.src = `${image_url+poster_path}`;
-        imag.style.width = '70%';
+        imag.alt = `${id}`;
         
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+
+        const overlayText = document.createElement('div');
+        overlayText.classList.add('text-overlay');
+        overlayText.innerHTML = 'Click for teaser';
+
+        containerImage.appendChild(imag);
+        overlay.appendChild(overlayText);
+        containerImage.appendChild(overlay);
 
         const col = document.createElement('div');
         col.classList.add('col-5');
         col.style.textAlign = 'center';
-        col.appendChild(imag);
+        col.appendChild(containerImage);
     
 
         rand.appendChild(col);
@@ -344,5 +358,3 @@ function showQuote(quote){
         bannerQuote.innerHTML = `Quote of the day is: ${quote}`;
     }
 }
-
-

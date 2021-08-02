@@ -165,7 +165,6 @@ exports.logoutAdmin = (req, res) => {
 }
 
 exports.getHomePage = (req, res) => {
-    console.log("home page admin")
     console.log(req.session.adminLoggedIn);
 
     if(req.session.adminLoggedIn){

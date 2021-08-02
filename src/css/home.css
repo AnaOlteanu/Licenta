@@ -6,6 +6,7 @@ body{
 .container-banner{
     padding: 10px;
     margin-top: 4rem;
+    margin-bottom: 4rem;
 }
 
 .banner-title{
@@ -45,4 +46,30 @@ body{
     color: rgb(245, 227, 177);
     font-family: 'Give You Glory';
     font-style: italic;
+}
+
+#top10-container{
+    background: rgba(0, 0, 0, 0.7);
+    margin-left: 8%;
+    margin-right: 8%;
+    padding: 2%;
+}
+
+#top10-text{
+    display: inline;
+    color: white;
+    font-size: 20px;
+
+}
+
+#top10-text:hover #a-top10{
+
+        color: white;
+
+
+}
+
+#a-top10{
+    text-decoration: none;
+    color: green;
 }
