@@ -8,6 +8,7 @@ const favouriteMoviesRoutes = require('./routes/favourites-routes.cjs');
 const dislikedMoviesRoutes = require('./routes/dislikes-routes.cjs');
 const recommendationRoutes = require('./routes/recommendations-routes.cjs');
 const homeRoutes = require('./routes/home-routes.cjs');
+const topLikesRoutes = require('./routes/top-likes.cjs');
 
 
 
@@ -32,20 +33,6 @@ app.get('/', (req, res) => {
     res.render('index')
 });
 
-// app.get('/home', (req, res) => {
-//     if(req.session.loggedin){
-//         res.render('home' , { 
-//             user: req.session.username,
-//             isLoggedIn: true
-//         })
-//     }
-//     else{
-//         res.render('home',{
-//             user: '',
-//             isLoggedIn: false})
-//     }
-    
-// })
 
 app.get('/details', (req, res) => {
     if(req.session.loggedin){
@@ -65,16 +52,22 @@ app.get('/details', (req, res) => {
 })
 
 app.get('/searchedMovies', (req, res) => {
+    console.log(req.session.loggedin);
     if(req.session.loggedin){
         res.render('search' , { 
             isLoggedIn: true,
             user: req.session.username
         })
     }
-    else{
+    else if(!req.session.adminLoggedIn){
         res.render('search',{
             isLoggedIn: false,
             user: req.session.username
+        })
+    } else {
+        res.render('search', {
+            isLoggedIn: false,
+            user: ''
         })
     }
 })
@@ -86,10 +79,15 @@ app.get('/detailsSearched', (req, res) => {
             user: req.session.username
         })
     }
-    else{
+    else if(!req.session.adminLoggedIn){
         res.render('search-details',{
             isLoggedIn: false,
             user: req.session.username
+        })
+    } else {
+        res.render('search-details', {
+            isLoggedIn: false,
+            user: ''
         })
     }
 })
@@ -116,6 +114,8 @@ app.use(dislikedMoviesRoutes);
 
 //recommended movies routes
 app.use(recommendationRoutes);
+
+app.use(topLikesRoutes);
 
 const port = 3000;
 app.listen(port, () => {

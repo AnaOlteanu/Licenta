@@ -21,25 +21,14 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/home">Home</a>
                   </li>
-                  <% if (user) { %>
-                    <li class="nav-item">
-                      <a class="nav-link" href="users/logout">Logout</a>
-                    </li>
-                <%} else {%>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/users/login">Login</a>
-                    </li>
-                <% } %>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/users/register">Register</a>
-                  </li>
+                  
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Admins
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item"   href="/admins/login">Login</a></li>
-                      <li><a class="dropdown-item" href="/admins/create-admin">Add admin</a></li>
+                      <li><a class="dropdown-item"   href="/admins/home">Home-admins</a></li>
+                      
                     </ul>
                   </li>
                 </ul>

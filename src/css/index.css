@@ -34,7 +34,7 @@ body{
   }
     
 .slideshow li:nth-child(1) span { 
-  background-image: url(../images/alex-litvin-MAYsdoYpGuk-unsplash.jpg); 
+  background-image: url(../images/jakob-owens-CiUR8zISX60-unsplash.jpg);    
 }
 
 .slideshow li:nth-child(2) span { 
@@ -43,12 +43,12 @@ body{
 }
 
 .slideshow li:nth-child(3) span { 
-  background-image: url(../images/felix-mooneeram-evlkOfkQ5rE-unsplash.jpg);
+  background-image: url(../images/alex-litvin-MAYsdoYpGuk-unsplash.jpg);  
   animation-delay: 12s; 
 }
 
 .slideshow li:nth-child(4) span { 
-  background-image: url(../images/jakob-owens-CiUR8zISX60-unsplash.jpg);   
+  background-image: url(../images/felix-mooneeram-evlkOfkQ5rE-unsplash.jpg);  
   animation-delay: 18s; 
 }
 
@@ -101,13 +101,15 @@ a{
     
 }
 
+.container-get-started{
+  justify-content: center;
+  text-align: center;
+}
+
 #get_started_button {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translateX(-50%);
     border: none;
     background: transparent;
+    
     
 }
 
@@ -121,7 +123,7 @@ a{
 }
 
 #get_started_button a:hover{
-    color: rgb(212, 29, 23);
+    color: rgb(148, 21, 17);
     text-shadow: white 1px 1px 5px;
 }
 
@@ -135,46 +137,38 @@ a{
    
 }
 
-.container_login{
-    position: absolute;
-    padding: 20px;
-    width: 15%;
-    top: 75%;
-    left: 20%;
-    border: none;
-    background: rgba(228, 32, 26, 0.6);
-    border-radius: 10%;
-    justify-content: center;
+.btns-container{
+  position: relative;
+  margin: auto;
+  padding-top: 20%;
 }
 
-.container_login:hover{
+.col{
+  margin: 2% !important;
+  padding: 1px;
+  top: 75%;
+  border: none;
+  background: rgba(228, 32, 26, 0.6);
+  justify-content: center;
+
+}
+
+.col:hover{
     background-color:rgb(94, 13, 13);
 }
 
-.container_register{
-    position: absolute;
-    padding: 20px;
-    width: 15%;
-    top: 75%;
-    right: 20%;
-    border: none;
-    background: rgba(228, 32, 26, 0.6);
-    border-radius: 10%;
-    justify-content: center;
+.col a:hover{
+  text-shadow: 5px 5px black;
 }
 
-.container_register:hover{
-    background-color:rgb(94, 13, 13);
-}
-
-.text_lr{
+.text{
     color: white;
     text-decoration: none;
     text-align: center;
-    font-size: 20px;
+    font-size: 25px;
 }
 
-.text_lr:hover{
+.text:hover{
     color: white;
 }
 

@@ -23,10 +23,11 @@ Quote.getQuote = result => {
         if(err){
             result(err, null);
             return;
-        } else {
+        } else if(res.length > 0){
             result(null, res);
             return;
         }
+        result(null, 'no data found');
     })
 }
 

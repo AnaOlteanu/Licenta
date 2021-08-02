@@ -46,4 +46,21 @@ likeMovie.getNumberLikes = (movie_id, result) => {
     })
 }
 
+likeMovie.getTopLikedMovies = (result) => {
+    mysql.query("SELECT COUNT(user_id) c, movie_id FROM movie_likes GROUP By movie_id ORDER BY c DESC LIMIT 10", (err, res) => {
+        if(err){
+            result(err, null);
+            return;
+        }
+        if(res.length > 0){
+            result(null, res);
+            return;
+        }
+        else{
+            result(false, 'no data found');
+            return;
+        }
+    })
+}
+
 module.exports = likeMovie;

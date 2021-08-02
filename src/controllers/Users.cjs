@@ -134,72 +134,77 @@ exports.profileUser = (req, res) => {
 
     const user_id = req.session.userId;
 
-    FavouriteMovies.getAll(user_id, (err, data) => {
-        if(data == 'no favourites'){
-            var fav = []
-            DislikedMovies.getAll(user_id, (err, data) => {
-                if(err == true){
-                    var dis = []
-                    console.log("AM AJUNS");
-                    res.render('profile', {
-                        dislikes: false,
-                        favourites: false,
-                        user: req.session.username,
-                        data_d: dis,
-                        data_f: fav
-                    })
-                }
-                else{
-                    
-                    var dis = []
-                    for(let i = 0; i < data.length; i++){
-                        dis.push(data[i].movie_id)
+    if(req.session.loggedin){
+
+        FavouriteMovies.getAll(user_id, (err, data) => {
+            if(data == 'no favourites'){
+                var fav = []
+                DislikedMovies.getAll(user_id, (err, data) => {
+                    if(err == true){
+                        var dis = []
+                        console.log("AM AJUNS");
+                        res.render('profile', {
+                            dislikes: false,
+                            favourites: false,
+                            user: req.session.username,
+                            data_d: dis,
+                            data_f: fav
+                        })
                     }
-                    res.render('profile', {
-                        dislikes: true,
-                        favourite: false,
-                        data_d: dis,
-                        data_f: fav,
-                        user: req.session.username
-                    })
-                }
-            });
-            
-        }
-        else{   
-            
-            var fav = []
-            for(let i = 0; i < data.length; i++){
-                fav.push(data[i].movie_id)
+                    else{
+                        
+                        var dis = []
+                        for(let i = 0; i < data.length; i++){
+                            dis.push(data[i].movie_id)
+                        }
+                        res.render('profile', {
+                            dislikes: true,
+                            favourite: false,
+                            data_d: dis,
+                            data_f: fav,
+                            user: req.session.username
+                        })
+                    }
+                });
+                
             }
-            DislikedMovies.getAll(user_id, (err, data) => {
-                if(data == 'no dislikes'){
-                    var dis = []
-                    res.render('profile', {
-                        dislikes: false,
-                        favourites: true,
-                        user: req.session.username,
-                        data_d: dis,
-                        data_f: fav
-                    })
+            else{   
+                
+                var fav = []
+                for(let i = 0; i < data.length; i++){
+                    fav.push(data[i].movie_id)
                 }
-                else{
-                    
-                    var dis = []
-                    for(let i = 0; i < data.length; i++){
-                        dis.push(data[i].movie_id)
+                DislikedMovies.getAll(user_id, (err, data) => {
+                    if(data == 'no dislikes'){
+                        var dis = []
+                        res.render('profile', {
+                            dislikes: false,
+                            favourites: true,
+                            user: req.session.username,
+                            data_d: dis,
+                            data_f: fav
+                        })
                     }
-                    res.render('profile', {
-                        dislikes: true,
-                        favourite: true,
-                        data_d: dis,
-                        data_f: fav,
-                        user: req.session.username
-                    })
-                }
-            })
-        }
-    });
+                    else{
+                        
+                        var dis = []
+                        for(let i = 0; i < data.length; i++){
+                            dis.push(data[i].movie_id)
+                        }
+                        res.render('profile', {
+                            dislikes: true,
+                            favourite: true,
+                            data_d: dis,
+                            data_f: fav,
+                            user: req.session.username
+                        })
+                    }
+                })
+            }
+        });
+    } else {
+        res.redirect('/users/login');
+    }
 
     
 }

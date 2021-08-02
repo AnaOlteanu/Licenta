@@ -14,10 +14,7 @@ router.get('/detailsFav', (req, res) => {
         })
     }
     else{
-        res.render('favourite-details',{
-            isLoggedIn: false,
-            user: req.session.username
-        })
+        res.redirect('/users/login');
     }
 })
 

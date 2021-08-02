@@ -14,10 +14,7 @@ router.get('/detailsDis', (req, res) => {
         })
     }
     else{
-        res.render('dislikes-details',{
-            isLoggedIn: false,
-            user: req.session.username
-        })
+        res.redirect('/users/login');
     }
 })
 

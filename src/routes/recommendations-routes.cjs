@@ -13,10 +13,7 @@ router.get('/detailsRec', (req, res) => {
         })
     }
     else{
-        res.render('recommendations-details',{
-            isLoggedIn: false,
-            user: req.session.username
-        })
+        res.redirect('/users/login');
     }
 })
 

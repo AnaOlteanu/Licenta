@@ -73,7 +73,7 @@ exports.createAdmin = async (req, res) => {
                                     else {
                                         res.render('admins-login', {
                                             message: '',
-                                            user: req.session.username
+                                            admin: req.session.admin
                                         });
                                     }
                                 })
@@ -113,7 +113,7 @@ exports.loginAdmin = (req, res) => {
     if(!username || !password){
         return res.render('admins-login', {
             message: "Please provide an username and a password!",
-            user: req.session.username
+            admin: req.session.admin
             });
     }
 
@@ -121,7 +121,7 @@ exports.loginAdmin = (req, res) => {
         if(!matched){
             return res.render('admins-login', {
                 message: 'The username should start with capital letter',
-                user: req.session.username
+                admin: req.session.admin
             })
         } else {
             const admin = new Admin({username: username, password: password});
@@ -129,18 +129,18 @@ exports.loginAdmin = (req, res) => {
                 if (data == 'denied' || data == 'no result'){
                     return res.render('admins-login', {
                         message: 'Username or password incorrect!',
-                        user: req.session.username
+                        admin: req.session.admin
                     })
                 }
                 else if(err){
                     return res.render('admins-login', {
                         message: err.message || "Some error occurred while login the Admin.",
-                        user: req.session.username
+                        admin: req.session.admin
                     })
                 }
                 else {
-                    req.session.loggedin = true;
-                    req.session.username = data[0].username;
+                    req.session.admin = data[0].username;
+                    req.session.loggedin = false;
                     req.session.adminId = data[0].id;
                     req.session.adminLoggedIn = true;
                     res.redirect('/admins/home');
@@ -157,20 +157,22 @@ exports.loginAdmin = (req, res) => {
 }
 
 exports.logoutAdmin = (req, res) => {
-    req.session.loggedin = false;
-    req.session.username = '';
+    req.session.admin = '';
     req.session.adminLoggedIn = false;
+    req.session.loggedin = false;
     req.session.adminId = '';
     res.redirect('/home');
 }
 
 exports.getHomePage = (req, res) => {
+    console.log("home page admin")
+    console.log(req.session.adminLoggedIn);
 
     if(req.session.adminLoggedIn){
         User.getAll((err, data) => {
             if(err){
                 res.render('admins-home', {
-                    admin: req.session.username,
+                    admin: req.session.admin,
                     admin_id: req.session.adminId,
                     users: []
                 })
@@ -180,7 +182,7 @@ exports.getHomePage = (req, res) => {
                     users.push(data[i].username);
                 }
                 res.render('admins-home', {
-                    admin: req.session.username,
+                    admin: req.session.admin,
                     admin_id: req.session.adminId,
                     users: users
                 })
