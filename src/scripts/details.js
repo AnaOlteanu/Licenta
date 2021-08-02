@@ -16,7 +16,7 @@ document.onclick = function(event){
 
         fetch(teaserURL).then((res) => res.json()).then((data) => {
             const videos = data.results;
-            const length = videos.length > 4 ? 3 : videos.length;
+            const length = videos.length >= 4 ? 3 : videos.length;
             const iframeContainer = document.createElement('div');
 
             content[0].innerHTML = '<i class="fa fa-times" id="content-close" aria-hidden="true"></i>'

@@ -80,6 +80,7 @@
 
 #content-close:hover{
     color: red !important;
+    cursor: pointer;
 }
 
 .container-image {
@@ -107,6 +108,7 @@
   
 .container-image:hover .overlay {
     opacity: 1;
+    cursor: pointer;
   }
   
 .text-overlay {
