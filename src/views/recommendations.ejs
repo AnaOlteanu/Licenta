@@ -62,10 +62,19 @@
             <h3 class="banner-title" id="banner-2">You don't have any recommendations yet! Like or dislike some of our movies first!</h3>
         <%} else {%>
                 <h1 class="banner-title" id="banner">Here are your recommended movies based on other users preferences!</h1>
-                <div id="main"></div>
+                
             </div>
         <% } %>
       </div>
+
+      
+
+      <div class="container-info">
+        <div class="info-text">• Based on our <i style="color: rgb(117, 173, 71);">Collaborative Filtering algorithm</i> using the movies you interacted with and the other users opinions on these movies, 
+            we come up with these recommendations for you. You can like or dislike these movies, on your own preferences.</div>
+      </div>
+
+      <div id="main"></div>
 
       <script src="../scripts/recommendations.js"></script>
       <script>

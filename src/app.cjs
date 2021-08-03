@@ -9,7 +9,8 @@ const dislikedMoviesRoutes = require('./routes/dislikes-routes.cjs');
 const recommendationRoutes = require('./routes/recommendations-routes.cjs');
 const homeRoutes = require('./routes/home-routes.cjs');
 const topLikesRoutes = require('./routes/top-likes.cjs');
-
+const searchedMovieRoutes = require('./routes/search-routes.cjs');
+const detailsRoutes = require('./routes/details-routes.cjs');
 
 
 const app = express();
@@ -34,65 +35,13 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/details', (req, res) => {
-    if(req.session.loggedin){
-        res.render('details' , { 
-            isLoggedIn: true,
-            already_like: req.session.already_liked,
-            user: req.session.username
-        })
-    }
-    else{
-        res.render('details',{
-            isLoggedIn: false,
-            already_like:  req.session.already_liked,
-            user: req.session.username
-        })
-    }
-})
 
-app.get('/searchedMovies', (req, res) => {
-    console.log(req.session.loggedin);
-    if(req.session.loggedin){
-        res.render('search' , { 
-            isLoggedIn: true,
-            user: req.session.username
-        })
-    }
-    else if(!req.session.adminLoggedIn){
-        res.render('search',{
-            isLoggedIn: false,
-            user: req.session.username
-        })
-    } else {
-        res.render('search', {
-            isLoggedIn: false,
-            user: ''
-        })
-    }
-})
 
-app.get('/detailsSearched', (req, res) => {
-    if(req.session.loggedin){
-        res.render('search-details' , { 
-            isLoggedIn: true,
-            user: req.session.username
-        })
-    }
-    else if(!req.session.adminLoggedIn){
-        res.render('search-details',{
-            isLoggedIn: false,
-            user: req.session.username
-        })
-    } else {
-        res.render('search-details', {
-            isLoggedIn: false,
-            user: ''
-        })
-    }
-})
-
+//home route
 app.use(homeRoutes);
+
+//movie details route
+app.use(detailsRoutes);
 
 //admin routes
 app.use(adminRoutes);
@@ -115,7 +64,12 @@ app.use(dislikedMoviesRoutes);
 //recommended movies routes
 app.use(recommendationRoutes);
 
+//top 10 liked movies routes
 app.use(topLikesRoutes);
+
+//searched movie by name routes
+app.use(searchedMovieRoutes);
+
 
 const port = 3000;
 app.listen(port, () => {

@@ -292,12 +292,21 @@ document.onclick = function(event){
 
             content[0].innerHTML = '<i class="fa fa-times" id="content-close" aria-hidden="true"></i>'
 
-            for(let i = 0; i < length; i++){
-                const video = videos[i];
-                const iframe = createIframe(video);
-                iframeContainer.appendChild(iframe);
-                content[0].appendChild(iframeContainer);
+            if(length == 0){
+                const message = document.createElement('div');
+                message.innerHTML = "We don't have any previews to show you";
+                message.classList.add('message-video');
+                content[0].appendChild(message);
+            } else{
+                for(let i = 0; i < length; i++){
+                    const video = videos[i];
+                    const iframe = createIframe(video);
+                    iframeContainer.appendChild(iframe);
+                    content[0].appendChild(iframeContainer);
+                }
             }
+
+            
         })
     }
 

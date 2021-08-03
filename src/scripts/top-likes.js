@@ -48,7 +48,7 @@ async function getTopTable(top10){
            
                 td_movie.innerHTML = 
             ` 
-                <div class="card mb-3" style="max-width: 450px;">
+                <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="${image_url+poster_path}" class="img-fluid rounded-start" alt="${title}">
@@ -182,15 +182,30 @@ function getTopMovieDetails(){
         rand.classList.add('row');
         rand.style.padding = '1%';
 
+        const containerImage = document.createElement('div');
+        containerImage.classList.add('container-image');
+
         const imag = document.createElement('img');
+        imag.classList.add('image');
         imag.src = `${image_url+poster_path}`;
-        imag.style.width = '70%';
+        imag.alt = `${id}`;
         
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+
+        const overlayText = document.createElement('div');
+        overlayText.classList.add('text-overlay');
+        overlayText.innerHTML = 'Click for teaser';
+
+        containerImage.appendChild(imag);
+        overlay.appendChild(overlayText);
+        containerImage.appendChild(overlay);
 
         const col = document.createElement('div');
         col.classList.add('col-5');
         col.style.textAlign = 'center';
-        col.appendChild(imag);
+        col.appendChild(containerImage);
+    
     
 
         rand.appendChild(col);
@@ -361,4 +376,51 @@ function showSearchedMovies(){
     window.location = 'searchedMovies?movie_name=' + value;
     return false;
 
+}
+
+document.onclick = function(event){
+    const initialTarget = event.target;
+    console.log(initialTarget);
+
+    const target = initialTarget.previousElementSibling;
+    console.log(target);
+
+    if(target !== null && target.tagName.toLowerCase() === 'img'){
+        const content = document.getElementsByClassName('content');
+        content[0].classList.add('content-display');
+        const movie_id = target.alt;
+        console.log(movie_id);
+
+        const teaserURL = tmdb_api + '/movie/' + movie_id + '/videos?' + api_key;
+        console.log(teaserURL);
+
+        fetch(teaserURL).then((res) => res.json()).then((data) => {
+            const videos = data.results;
+            const length = videos.length >= 4 ? 3 : videos.length;
+            const iframeContainer = document.createElement('div');
+
+            content[0].innerHTML = '<i class="fa fa-times" id="content-close" aria-hidden="true"></i>'
+
+            for(let i = 0; i < length; i++){
+                const video = videos[i];
+                const iframe = createIframe(video);
+                iframeContainer.appendChild(iframe);
+                content[0].appendChild(iframeContainer);
+            }
+        })
+    }
+
+    if(initialTarget.id === 'content-close'){
+        const content = initialTarget.parentElement;
+        content.classList.remove('content-display');
+    }
+}
+
+function createIframe(video) {
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${video.key}`;
+    iframe.width = 460;
+    iframe.height = 415;
+    iframe.allowFullscreen = true;
+    return iframe;
 }

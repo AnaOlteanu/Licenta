@@ -21,3 +21,16 @@
 .card{
     background: rgba(0, 0, 0, 0.7) !important;
 }
+
+.container-info{
+    margin-top: 4%;
+    margin-left: 7%;
+    margin-right: 7%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2%;
+}
+
+.info-text{
+    color: white;
+    font-size: 20px;
+}

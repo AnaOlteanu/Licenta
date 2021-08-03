@@ -161,11 +161,10 @@ exports.logoutAdmin = (req, res) => {
     req.session.adminLoggedIn = false;
     req.session.loggedin = false;
     req.session.adminId = '';
-    res.redirect('/home');
+    res.redirect('/');
 }
 
 exports.getHomePage = (req, res) => {
-    console.log(req.session.adminLoggedIn);
 
     if(req.session.adminLoggedIn){
         User.getAll((err, data) => {
@@ -198,7 +197,6 @@ exports.getHomePage = (req, res) => {
 
 exports.deleteUser = (req, res) => {
     var username = req.body.username;
-    console.log(username);
     Admin.deleteUser(username, (err, data) => {
         if(err){
             res.status(200).json({
