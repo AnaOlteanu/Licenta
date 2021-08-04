@@ -286,11 +286,9 @@ function dislikeMovie(movie_id){
 }
 
 document.onclick = function(event){
-    const initialTarget = event.target;
-    console.log(initialTarget);
 
+    const initialTarget = event.target;
     const target = initialTarget.previousElementSibling;
-    console.log(target);
 
     if(target !== null && target.tagName.toLowerCase() === 'img'){
         const content = document.getElementsByClassName('content');
@@ -299,7 +297,6 @@ document.onclick = function(event){
         console.log(movie_id);
 
         const teaserURL = tmdb_api + '/movie/' + movie_id + '/videos?' + api_key;
-        console.log(teaserURL);
 
         fetch(teaserURL).then((res) => res.json()).then((data) => {
             const videos = data.results;
@@ -326,8 +323,49 @@ document.onclick = function(event){
 function createIframe(video) {
     const iframe = document.createElement('iframe');
     iframe.src = `https://www.youtube.com/embed/${video.key}`;
-    iframe.width = 460;
-    iframe.height = 415;
+    iframe.width = 350;
+    iframe.height = 220;
     iframe.allowFullscreen = true;
     return iframe;
+}
+
+function getComments(){
+    var url = new URL(window.location.href);
+    const movie_id = url.searchParams.get('movie_id'); 
+    fetch('/getComments?movie_id=' + movie_id + '&username=' + user).then(res => res.json()).then(data =>{
+        if(data.status === "success"){
+            var comments = data.comments;
+            console.log(comments)
+            const commentDiv = document.getElementById('comments');
+            for(let i = 0; i <comments.length; i++){
+                const div = document.createElement('div');
+                div.innerHTML = `${comments[i].comment}, ${comments[i].date}, ${comments[i].username}`;
+                console.log(div);
+                div.style.color = 'white';
+                commentDiv.appendChild(div);
+            }
+         }
+     })
+}
+
+function addComment(){
+    const comment = document.getElementById('comment-text').value;
+    var url = new URL(window.location.href);
+    const movie_id = url.searchParams.get('movie_id'); 
+    console.log(movie_id);
+    console.log(user);
+    fetch('/addComment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify({ 
+            movie_id: movie_id,
+            username: user,
+            comment: comment
+        })
+    }).then(res => res.json()).then(data =>{
+        if(data.status === "success"){
+         }
+     })
 }

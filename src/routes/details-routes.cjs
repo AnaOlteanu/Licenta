@@ -14,7 +14,7 @@ router.get('/details', (req, res) => {
         res.render('details',{
             isLoggedIn: false,
             already_like:  req.session.already_liked,
-            user: req.session.username
+            user: ""
         })
     }
 })

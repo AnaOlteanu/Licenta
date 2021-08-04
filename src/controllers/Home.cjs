@@ -1,6 +1,8 @@
 const Quote = require('../models/quote.cjs')
+const session = require('express-session');
 
 exports.getHomePage = (req, res) => {
+
     if(req.session.loggedin){
 
         Quote.getQuote((err,data) => {
@@ -26,11 +28,12 @@ exports.getHomePage = (req, res) => {
         })
 
     }
-    else if(!req.session.adminLoggedIn){
+    else if(!req.session.loggedin && !req.session.adminLoggedIn){
+        console.log(req.session.secret);
         res.render('home',{
-            user: '',
+            user: "",
             isLoggedIn: false,
-            quote: ''
+            quote: ""
         })
     }
     else if(req.session.adminLoggedIn){

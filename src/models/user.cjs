@@ -77,4 +77,21 @@ User.checkIfExists = (username, result) => {
     });
 }
 
+User.getUserByUsername = (username, result) => {
+    mysql.query("SELECT id FROM users WHERE username = ?", username, (err, res) => {
+        if(err){
+            result(err, null);
+            return;
+        }
+        if(res.length > 0){
+            result(false, res[0].id);
+            return;
+        } else {
+            result(false, 'no data found');
+            return;
+        }
+    })
+}
+
+
 module.exports = User;

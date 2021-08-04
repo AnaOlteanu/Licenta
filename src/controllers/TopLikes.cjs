@@ -26,7 +26,6 @@ exports.getTop10 = (req, res) => {
                 };
                 top10.push(ob);
             }
-            console.log(top10);
             res.render('top-likes', {
                 status: 'ok',
                 top: top10,

@@ -11,6 +11,7 @@ const homeRoutes = require('./routes/home-routes.cjs');
 const topLikesRoutes = require('./routes/top-likes.cjs');
 const searchedMovieRoutes = require('./routes/search-routes.cjs');
 const detailsRoutes = require('./routes/details-routes.cjs');
+const commentsRoutes = require('./routes/comments-routes.cjs');
 
 
 const app = express();
@@ -25,11 +26,10 @@ app.use(express.static(__dirname))
     .use(session({
         secret: 'secret',
         resave: true,
-        saveUninitialized: true,
-        adminLoggedIn: false,
-        adminId: null
+        saveUninitialized: true
     }))
  
+
 app.get('/', (req, res) => {
     res.render('index')
 });
@@ -70,6 +70,7 @@ app.use(topLikesRoutes);
 //searched movie by name routes
 app.use(searchedMovieRoutes);
 
+app.use(commentsRoutes);
 
 const port = 3000;
 app.listen(port, () => {

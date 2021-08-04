@@ -1,11 +1,10 @@
 const Admin = require('../models/admin.cjs');
 const User = require('../models/user.cjs');
 const Quote = require('../models/quote.cjs');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const session = require('express-session');
-const {Validator} = require('node-input-validator');
+const { Validator } = require('node-input-validator');
 
 
 
