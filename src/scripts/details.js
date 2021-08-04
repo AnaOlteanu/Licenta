@@ -6,8 +6,8 @@ function getMovie(){
     let movie_details_url = tmdb_api + '/movie/' + movie_id + '?' + api_key;
 
     let movie_actors_url = tmdb_api + '/movie/' + movie_id + '/credits?' + api_key;
-
     const actors = document.createElement('li');
+
     fetch(movie_actors_url).then(res => res.json()).then(movie => {
         const {cast} = movie;
 
@@ -24,8 +24,6 @@ function getMovie(){
             else if(cast[i].known_for_department == "Acting")
                 actors.innerHTML += `${cast[i].name}, `;
         }
-
-        console.log(actors);
     })
 
 
@@ -396,7 +394,7 @@ function getComments(){
      })
 }
 
-var empty = false;
+
 function addComment(){
 
     const comment = document.getElementById('comment-text').value;
@@ -404,6 +402,9 @@ function addComment(){
     const movie_id = url.searchParams.get('movie_id'); 
 
     document.getElementById('comment-text').value = "";
+
+    const emptyMessage = document.getElementsByClassName('alert');
+    emptyMessage[0].style.display = 'none';
 
 
     if(comment !== ""){
@@ -420,11 +421,6 @@ function addComment(){
         }).then(res => res.json()).then(data =>{
             if(data.status === "success"){
              
-                if(empty){
-                    const message = document.getElementsByClassName('alert');
-                    message[0].style.display = 'none';
-                }
-
                 var comment = data.comment;
 
                 const commentxTextContainer = document.getElementById('comments-text-container');
@@ -452,17 +448,10 @@ function addComment(){
             
                 commentDiv.appendChild(commentxTextContainer);
             }
+            getCountComments();
         })
     } else {
-        const commentBox = document.getElementById('comment-box');
-        const message = document.createElement('div');
-        message.classList.add("alert");
-        message.classList.add("alert-danger");
-        message.innerHTML = 'The comment should not be empty!';
-        message.style.marginTop = '1%';
-        commentBox.appendChild(message);
-
-        empty = true;
+        emptyMessage[0].style.display = 'inline';
     }
 }
 

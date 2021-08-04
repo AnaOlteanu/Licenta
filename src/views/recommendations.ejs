@@ -68,11 +68,19 @@
       </div>
 
       
-
+      <% if (recommendation) { %>
       <div class="container-info">
         <div class="info-text">• Based on our <i style="color: rgb(117, 173, 71);">Collaborative Filtering algorithm</i> using the movies you interacted with and the other users opinions on these movies, 
-            we come up with these recommendations for you. You can like or dislike these movies, on your own preferences.</div>
-      </div>
+            we come up with these recommendations for you that you might be interested in. You can like or dislike these movies, on your own preferences.
+          </div>   
+        </div>
+        <%} else {%>
+          <div class="container-info">
+            <div class="info-text">• Based on our <i style="color: rgb(117, 173, 71);">Collaborative Filtering algorithm</i> using the movies you interact with and the other users opinions on these movies, 
+                we can come up with recommendations for you. Look up some movies and give them a like or dislike.
+              </div>   
+            </div>        <% } %>
+      
 
       <div id="main"></div>
 

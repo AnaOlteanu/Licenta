@@ -59,12 +59,33 @@
 
   <div id="det"></div>
 
+  <div class="content">
+    <p id="content-close">X</p>
+  </div>
+
+  <div class="comments-container">
+    <div class="comments-title"></div>
+    <div id="comments">
+      <% if (user) { %>
+        <div id="comment-box" class="row">
+          <textarea class="col" id="comment-text" rows="3" cols="100" placeholder="Leave a comment here..."></textarea>
+           <button  class="btn btn-outline-success col col-2" onclick="addComment()">Post</button>
+           <div class="alert alert-danger" style="display: none;">The comment should not be empty!</div>
+       </div>
+        <%} %>
+        <div id="comments-text-container"></div>
+    </div>
+  </div>
+
 
 </body>
 
     <script src="../scripts/recommendations.js"></script>
     <script>
+      var user = <%- JSON.stringify(user) %>;
         getRecMovieDetails();
+        getComments();
+        getCountComments();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

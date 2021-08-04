@@ -62,7 +62,7 @@ favouriteMovie.getDifferentLikedMovies = (movie_ids, user_id, k_users, result) =
 
 favouriteMovie.deleteFav = (movie_id, user_id, result) => {
     mysql.query("DELETE FROM movie_likes WHERE movie_id = ? AND user_id = ?", [movie_id, user_id], (err, res) => {
-        console.log(res);
+   
         if(err){
             result(err, null);
             return;

@@ -93,6 +93,27 @@ function getTopMovieDetails(){
     let movie_id = url.searchParams.get('movie_id'); 
     let movie_details_url = tmdb_api + '/movie/' + movie_id + '?' + api_key;
 
+    let movie_actors_url = tmdb_api + '/movie/' + movie_id + '/credits?' + api_key;
+    const actors = document.createElement('li');
+    fetch(movie_actors_url).then(res => res.json()).then(movie => {
+        const {cast} = movie;
+
+        actors.classList.add('list-group-item');
+        actors.style.background = 'rgba(0, 0, 0, 0.8)'; 
+        actors.style.color = 'white'; 
+        actors.innerHTML = '<strong>Actors: </strong>';
+        
+        for(var i = 0; i < 5; i++){
+            if(i == 4 && cast[i].known_for_department == "Acting"){
+                actors.innerHTML += `${cast[i].name}. `;
+            }
+            else if(cast[i].known_for_department == "Acting")
+                actors.innerHTML += `${cast[i].name}, `;
+        }
+
+        
+    })
+
     fetch(movie_details_url).then(res => res.json()).then(movie =>{
 
         const {title,poster_path,release_date, overview, id, production_companies, genres} = movie;
@@ -130,6 +151,7 @@ function getTopMovieDetails(){
                 genres_movie.innerHTML += `${genres[i].name}, `;
         }
         lista.appendChild(genres_movie);
+        lista.appendChild(actors);
 
         const production = document.createElement('li');
         production.classList.add('list-group-item');
@@ -424,3 +446,120 @@ function createIframe(video) {
     iframe.allowFullscreen = true;
     return iframe;
 }
+
+
+function getComments(){
+    var url = new URL(window.location.href);
+    const movie_id = url.searchParams.get('movie_id'); 
+
+    fetch('/getComments?movie_id=' + movie_id + '&username=' + user).then(res => res.json()).then(data =>{
+        if(data.status === "success"){
+            var comments = data.comments;
+            
+
+            const commentsDisplayContainer = document.getElementById('comments-text-container');
+            const commentDiv = document.getElementById('comments');
+
+            
+            for(let i = 0; i <comments.length; i++){
+                
+                const commentBox = document.createElement('div');
+                commentBox.classList.add('text-justify');
+                commentBox.classList.add('comm');
+
+                const usernameBox = document.createElement('h5');
+                usernameBox.innerHTML = `${comments[i].username}`;
+
+                const dateBox = document.createElement('span');
+                const date = comments[i].date;
+           
+                dateBox.innerHTML = ` - ${date}`;
+
+                const textCommBox = document.createElement('p');
+                textCommBox.innerHTML = `${comments[i].comment}`;
+
+                commentBox.appendChild(usernameBox);
+                commentBox.appendChild(dateBox);
+                commentBox.appendChild(textCommBox);
+
+                commentsDisplayContainer.appendChild(commentBox);
+            }
+            
+         }
+     })
+}
+
+
+function addComment(){
+
+    const comment = document.getElementById('comment-text').value;
+    var url = new URL(window.location.href);
+    const movie_id = url.searchParams.get('movie_id'); 
+
+    document.getElementById('comment-text').value = "";
+
+    const emptyMessage = document.getElementsByClassName('alert');
+    emptyMessage[0].style.display = 'none';
+
+
+    if(comment !== ""){
+        fetch('/addComment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                movie_id: movie_id,
+                username: user,
+                comment: comment
+            })
+        }).then(res => res.json()).then(data =>{
+            if(data.status === "success"){
+             
+                var comment = data.comment;
+
+                const commentxTextContainer = document.getElementById('comments-text-container');
+                const commentDiv = document.getElementById('comments');
+
+                const commentBox = document.createElement('div');
+                commentBox.classList.add('text-justify');
+                commentBox.classList.add('comm');
+
+                const usernameBox = document.createElement('h5');
+                usernameBox.innerHTML = `${comment.username}`;
+
+                const dateBox = document.createElement('span');
+                const date = comment.date;
+                dateBox.innerHTML = ` - ${date}`;
+
+                const textCommBox = document.createElement('p');
+                textCommBox.innerHTML = `${comment.comment_text}`;
+
+                commentBox.appendChild(usernameBox);
+                commentBox.appendChild(dateBox);
+                commentBox.appendChild(textCommBox);
+
+                commentxTextContainer.appendChild(commentBox);
+            
+                commentDiv.appendChild(commentxTextContainer);
+            }
+            getCountComments();
+        })
+    } else {
+        emptyMessage[0].style.display = 'inline';
+    }
+}
+function getCountComments(){
+
+    var url = new URL(window.location.href);
+    const movie_id = url.searchParams.get('movie_id'); 
+
+    fetch('/getCountComments?movie_id=' + movie_id).then(res => res.json()).then(data =>{
+        if(data.status === 'success'){
+            var nrComments = data.number;
+            const commentsTitle = document.getElementsByClassName('comments-title');
+            commentsTitle[0].innerHTML = `Comments (${nrComments})`;
+        }
+    })
+}
+
