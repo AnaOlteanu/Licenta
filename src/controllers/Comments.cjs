@@ -29,22 +29,26 @@ exports.addComment = async (req, res) => {
                 }
                 console.log(data);
                 if(data === 'success'){
-                    const date = today.getDate() + '-' + (today.getMonth() + 1) + '-'+ today.getFullYear() ;
+                    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    var date = today;
+                    var month = months[date.getMonth()];
+                    var date_formatted = date.getDate() + ', ' + month + ', ' + date.getFullYear();
+                    var comm = {
+                        comment_text: comment_text,
+                        date: date_formatted,
+                        username: username
+                    }
                     res.status(200).json({
                         status: 'success',
-                        comment: comment_text,
-                        date: date,
-                        username: username,
-                        movie_id: movie_id
+                        comment: comm
+        
                     });
                 }
                 else{
                     res.status(200).json({
                         status: 'fail',
-                        comment: "",
-                        date: "",
-                        username: "",
-                        movie_id: ""
+                        comment: ""
+                    
                     });
                 }
             })
@@ -63,9 +67,12 @@ exports.getComments = async (req, res) => {
         } else if(!err && data !== 'no data found'){
             
             var comments = [];
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
             for(let i = 0; i < data.length; i++){
                 var date = data[i].date;
-                var date_formatted = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                var month = months[date.getMonth()];
+                var date_formatted = date.getDate() + ', ' + month + ', ' + date.getFullYear();
                 var ob = {
                     comment: data[i].comment_text,
                     date: date_formatted,
@@ -87,4 +94,20 @@ exports.getComments = async (req, res) => {
         }
     })
     
+}
+
+
+exports.getCountComments = (req, res) => {
+    var movie_id = req.query.movie_id;
+
+    Comment.getCountComm(movie_id, (err, data) => {
+        if(err){
+            console.log(err);
+        } else{
+            res.status(200).json({
+                status: 'success',
+                number: data
+            });
+        }
+    })
 }

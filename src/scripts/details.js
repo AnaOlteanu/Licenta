@@ -332,40 +332,127 @@ function createIframe(video) {
 function getComments(){
     var url = new URL(window.location.href);
     const movie_id = url.searchParams.get('movie_id'); 
+
     fetch('/getComments?movie_id=' + movie_id + '&username=' + user).then(res => res.json()).then(data =>{
         if(data.status === "success"){
             var comments = data.comments;
             console.log(comments)
+            const commentsDisplayContainer = document.createElement('div');
+            commentsDisplayContainer.setAttribute('id','comments-text-container');
             const commentDiv = document.getElementById('comments');
+
+            
             for(let i = 0; i <comments.length; i++){
-                const div = document.createElement('div');
-                div.innerHTML = `${comments[i].comment}, ${comments[i].date}, ${comments[i].username}`;
-                console.log(div);
-                div.style.color = 'white';
-                commentDiv.appendChild(div);
+                
+                const commentBox = document.createElement('div');
+                commentBox.classList.add('text-justify');
+                commentBox.classList.add('comm');
+
+                const usernameBox = document.createElement('h5');
+                usernameBox.innerHTML = `${comments[i].username}`;
+
+                const dateBox = document.createElement('span');
+                const date = comments[i].date;
+                console.log(date);
+                dateBox.innerHTML = ` - ${date}`;
+
+                const textCommBox = document.createElement('p');
+                textCommBox.innerHTML = `${comments[i].comment}`;
+
+                commentBox.appendChild(usernameBox);
+                commentBox.appendChild(dateBox);
+                commentBox.appendChild(textCommBox);
+
+                commentsDisplayContainer.appendChild(commentBox);
             }
+            commentDiv.appendChild(commentsDisplayContainer);
          }
      })
 }
 
+var empty = false;
 function addComment(){
+
     const comment = document.getElementById('comment-text').value;
     var url = new URL(window.location.href);
     const movie_id = url.searchParams.get('movie_id'); 
+
     console.log(movie_id);
     console.log(user);
-    fetch('/addComment', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-          },
-        body: JSON.stringify({ 
-            movie_id: movie_id,
-            username: user,
-            comment: comment
+    document.getElementById('comment-text').value = "";
+
+
+    if(comment !== ""){
+        fetch('/addComment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                movie_id: movie_id,
+                username: user,
+                comment: comment
+            })
+        }).then(res => res.json()).then(data =>{
+            if(data.status === "success"){
+                console.log(empty);
+                if(empty){
+                    const message = document.getElementsByClassName('alert');
+                    message[0].style.display = 'none';
+                }
+
+                var comment = data.comment;
+
+                const commentxTextContainer = document.getElementById('comments-text-container');
+                const commentDiv = document.getElementById('comments');
+
+                const commentBox = document.createElement('div');
+                commentBox.classList.add('text-justify');
+                commentBox.classList.add('comm');
+
+                const usernameBox = document.createElement('h5');
+                usernameBox.innerHTML = `${comment.username}`;
+
+                const dateBox = document.createElement('span');
+                const date = comment.date;
+                dateBox.innerHTML = ` - ${date}`;
+
+                const textCommBox = document.createElement('p');
+                textCommBox.innerHTML = `${comment.comment_text}`;
+
+                commentBox.appendChild(usernameBox);
+                commentBox.appendChild(dateBox);
+                commentBox.appendChild(textCommBox);
+
+                commentxTextContainer.appendChild(commentBox);
+            
+                commentDiv.appendChild(commentxTextContainer);
+            }
         })
-    }).then(res => res.json()).then(data =>{
-        if(data.status === "success"){
-         }
-     })
+    } else {
+        const commentBox = document.getElementById('comment-box');
+        const message = document.createElement('div');
+        message.classList.add("alert");
+        message.classList.add("alert-danger");
+        message.innerHTML = 'The comment should not be empty!';
+        message.style.marginTop = '1%';
+        commentBox.appendChild(message);
+
+        empty = true;
+    }
 }
+
+function getCountComments(){
+
+    var url = new URL(window.location.href);
+    const movie_id = url.searchParams.get('movie_id'); 
+
+    fetch('/getCountComments?movie_id=' + movie_id).then(res => res.json()).then(data =>{
+        if(data.status === 'success'){
+            var nrComments = data.number;
+            const commentsTitle = document.getElementsByClassName('comments-title');
+            commentsTitle[0].innerHTML = `Comments (${nrComments})`;
+        }
+    })
+}
+

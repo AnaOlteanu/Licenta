@@ -8,4 +8,6 @@ router.post('/addComment', commentController.addComment);
 
 router.get('/getComments', commentController.getComments);
 
+router.get('/getCountComments', commentController.getCountComments);
+
 module.exports = router;

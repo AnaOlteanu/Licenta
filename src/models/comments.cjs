@@ -41,4 +41,18 @@ comment.getCommentsByMovieId = (movie_id, result) => {
     })
 }
 
+comment.getCountComm = (movie_id, result) => {
+
+    mysql.query("SELECT COUNT(comment_text) count FROM comments WHERE movie_id = ?", movie_id, (err, res) => {
+        if(err){
+            result(err, null);
+            return;
+        }
+        if(res.length > 0){
+            result(false, res[0].count);
+            return;
+        }
+    })
+}
+
 module.exports = comment;

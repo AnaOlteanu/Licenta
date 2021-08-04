@@ -29,7 +29,6 @@ exports.getHomePage = (req, res) => {
 
     }
     else if(!req.session.loggedin && !req.session.adminLoggedIn){
-        console.log(req.session.secret);
         res.render('home',{
             user: "",
             isLoggedIn: false,

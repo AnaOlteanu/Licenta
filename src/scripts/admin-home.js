@@ -67,6 +67,7 @@ function deleteUser(username, nr){
 
 function setQuote(){
     var quote = document.getElementById('quote-text').value;
+    document.getElementById('quote-text').value = "";
     fetch('/admins/setQuote', {
         method: 'POST',
         headers: {
