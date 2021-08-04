@@ -5,7 +5,31 @@ function getMovie(){
     
     let movie_details_url = tmdb_api + '/movie/' + movie_id + '?' + api_key;
 
-    fetch(movie_details_url).then(res => res.json()).then(movie =>{
+    let movie_actors_url = tmdb_api + '/movie/' + movie_id + '/credits?' + api_key;
+
+    const actors = document.createElement('li');
+    fetch(movie_actors_url).then(res => res.json()).then(movie => {
+        const {cast} = movie;
+
+        
+        actors.classList.add('list-group-item');
+        actors.style.background = 'rgba(0, 0, 0, 0.8)'; 
+        actors.style.color = 'white'; 
+        actors.innerHTML = '<strong>Actors: </strong>';
+        
+        for(var i = 0; i < 5; i++){
+            if(i == 4 && cast[i].known_for_department == "Acting"){
+                actors.innerHTML += `${cast[i].name}. `;
+            }
+            else if(cast[i].known_for_department == "Acting")
+                actors.innerHTML += `${cast[i].name}, `;
+        }
+
+        console.log(actors);
+    })
+
+
+    fetch(movie_details_url).then(res => res.json()).then(movie => {
 
         const {title,poster_path,release_date, overview, id, production_companies, genres} = movie;
     
@@ -45,7 +69,9 @@ function getMovie(){
             else
                 genres_movie.innerHTML += `${genres[i].name}, `;
         }
+        
         lista.appendChild(genres_movie);
+        lista.appendChild(actors);
 
         const production = document.createElement('li');
         production.classList.add('list-group-item');
@@ -294,7 +320,7 @@ document.onclick = function(event){
         const content = document.getElementsByClassName('content');
         content[0].classList.add('content-display');
         const movie_id = target.alt;
-        console.log(movie_id);
+       
 
         const teaserURL = tmdb_api + '/movie/' + movie_id + '/videos?' + api_key;
 
@@ -336,9 +362,9 @@ function getComments(){
     fetch('/getComments?movie_id=' + movie_id + '&username=' + user).then(res => res.json()).then(data =>{
         if(data.status === "success"){
             var comments = data.comments;
-            console.log(comments)
-            const commentsDisplayContainer = document.createElement('div');
-            commentsDisplayContainer.setAttribute('id','comments-text-container');
+            
+
+            const commentsDisplayContainer = document.getElementById('comments-text-container');
             const commentDiv = document.getElementById('comments');
 
             
@@ -353,7 +379,7 @@ function getComments(){
 
                 const dateBox = document.createElement('span');
                 const date = comments[i].date;
-                console.log(date);
+           
                 dateBox.innerHTML = ` - ${date}`;
 
                 const textCommBox = document.createElement('p');
@@ -365,7 +391,7 @@ function getComments(){
 
                 commentsDisplayContainer.appendChild(commentBox);
             }
-            commentDiv.appendChild(commentsDisplayContainer);
+            
          }
      })
 }
@@ -377,8 +403,6 @@ function addComment(){
     var url = new URL(window.location.href);
     const movie_id = url.searchParams.get('movie_id'); 
 
-    console.log(movie_id);
-    console.log(user);
     document.getElementById('comment-text').value = "";
 
 
@@ -395,7 +419,7 @@ function addComment(){
             })
         }).then(res => res.json()).then(data =>{
             if(data.status === "success"){
-                console.log(empty);
+             
                 if(empty){
                     const message = document.getElementsByClassName('alert');
                     message[0].style.display = 'none';

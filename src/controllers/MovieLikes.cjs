@@ -61,6 +61,7 @@ exports.getLikeButton = async (req, res) => {
 
 exports.getCountLikes = (req, res) => {
     var movie_id = req.query.movie_id;
+    
     MovieLike.getNumberLikes(movie_id, (err, data) => {
         if(err == false){
             res.status(200).json({
