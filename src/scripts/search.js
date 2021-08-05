@@ -294,19 +294,15 @@ function getSearchedMovieDetails(){
 }
 document.onclick = function(event){
     const initialTarget = event.target;
-    console.log(initialTarget);
 
     const target = initialTarget.previousElementSibling;
-    console.log(target);
 
     if(target !== null && target.tagName.toLowerCase() === 'img'){
         const content = document.getElementsByClassName('content');
         content[0].classList.add('content-display');
         const movie_id = target.alt;
-        console.log(movie_id);
 
         const teaserURL = tmdb_api + '/movie/' + movie_id + '/videos?' + api_key;
-        console.log(teaserURL);
 
         fetch(teaserURL).then((res) => res.json()).then((data) => {
             const videos = data.results;
@@ -484,7 +480,7 @@ function addComment(){
 
     document.getElementById('comment-text').value = "";
 
-    const emptyMessage = document.getElementsByClassName('alert');
+    const emptyMessage = document.getElementsByClassName('empty');
     emptyMessage[0].style.display = 'none';
 
 
@@ -525,7 +521,7 @@ function addComment(){
                 commentBox.appendChild(dateBox);
                 commentBox.appendChild(textCommBox);
 
-                commentxTextContainer.appendChild(commentBox);
+                commentxTextContainer.insertBefore(commentBox, commentxTextContainer.firstChild);
             
                 commentDiv.appendChild(commentxTextContainer);
             }

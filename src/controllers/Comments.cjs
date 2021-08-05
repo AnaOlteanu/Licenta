@@ -27,7 +27,7 @@ exports.addComment = async (req, res) => {
                 if(err){
                     console.log(err);
                 }
-                console.log(data);
+                
                 if(data === 'success'){
                     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                     var date = today;

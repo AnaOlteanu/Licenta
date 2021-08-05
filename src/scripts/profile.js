@@ -92,7 +92,6 @@ function getFavouriteMovies(data_fav){
 }
 
 function getDislikedMovies(data_dis){
-    console.log(data_dis)
     main2.innerHTML = '';
     const movie_el = document.createElement('div');
     movie_el.classList.add('row');
@@ -175,5 +174,53 @@ function getDislikedMovies(data_dis){
     
 }
 
+// var Chart = require('chart.js')
+// var ctx = document.getElementById('myChart');
+
+// const main3 = document.getElementById('main-3');
+
+// async function getPreferredGenres(data_fav){
+
+//     var genres_movie = []
+//     for(let i = 0; i < 3; i++){
+
+//         const get_movie_url = tmdb_api + get_movie_api + data_fav[i] + '?' + api_key;
+
+//         await fetch(get_movie_url).then(res => res.json()).then(data => {
+//             const {genres} = data;
+//             for(let i = 0; i < genres.length; i++){
+//                 console.log(genres[i].name);
+//                 if(genres_movie.length == 0){
+//                     var ob = {
+//                         genre: genres[i].name,
+//                         value: 1
+//                     };
+//                     genres_movie.push(ob);
+//                 }
+//             //     else {
+//             //         for(let j = 0; j < genres_movie.length; j ++)
+//             //             if(genres_movie[j].genre != genres[i].name){
+//             //                 var ob = {
+//             //                     genre: genres[i],
+//             //                     value: 1
+//             //                 };
+//             //                 genres_movie.push(ob);
+
+//             //             }
+//             //             else {
+//             //                 genres_movie[j].value ++;
+//             //             }
+//             //         }
+                
+//             }
+            
+//         })
+
+//     }
+
+//     console.log(genres_movie)
+
+
+// }
 
 

@@ -12,7 +12,7 @@ const topLikesRoutes = require('./routes/top-likes.cjs');
 const searchedMovieRoutes = require('./routes/search-routes.cjs');
 const detailsRoutes = require('./routes/details-routes.cjs');
 const commentsRoutes = require('./routes/comments-routes.cjs');
-
+const profileRoutes = require('./routes/profile-routes.cjs');
 
 const app = express();
 
@@ -71,6 +71,8 @@ app.use(topLikesRoutes);
 app.use(searchedMovieRoutes);
 
 app.use(commentsRoutes);
+
+app.use(profileRoutes);
 
 const port = 3000;
 app.listen(port, () => {

@@ -366,7 +366,7 @@ function getComments(){
             const commentDiv = document.getElementById('comments');
 
             
-            for(let i = 0; i <comments.length; i++){
+            for(let i = 0; i < comments.length; i++){
                 
                 const commentBox = document.createElement('div');
                 commentBox.classList.add('text-justify');
@@ -403,7 +403,7 @@ function addComment(){
 
     document.getElementById('comment-text').value = "";
 
-    const emptyMessage = document.getElementsByClassName('alert');
+    const emptyMessage = document.getElementsByClassName('empty');
     emptyMessage[0].style.display = 'none';
 
 
@@ -444,8 +444,7 @@ function addComment(){
                 commentBox.appendChild(dateBox);
                 commentBox.appendChild(textCommBox);
 
-                commentxTextContainer.appendChild(commentBox);
-            
+                commentxTextContainer.insertBefore(commentBox, commentxTextContainer.firstChild);
                 commentDiv.appendChild(commentxTextContainer);
             }
             getCountComments();
@@ -454,6 +453,7 @@ function addComment(){
         emptyMessage[0].style.display = 'inline';
     }
 }
+
 
 function getCountComments(){
 

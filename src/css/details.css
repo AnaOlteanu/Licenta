@@ -1,6 +1,6 @@
 #back_button{
     position: absolute;
-    top: 7%;
+    top: 8%;
     left: 3%;
     transform: translateX(-50%);
     border: none;
@@ -177,4 +177,18 @@
 .comm p,
 .comm span {
     color: rgb(197, 195, 195)
+}
+
+.comments-info{
+    color: rgb(170, 170, 170);
+    font-size: 17px;
+}
+
+.comments-info a{
+    text-decoration: none;
+    color:rgb(241, 220, 149);
+}
+
+.comments-info a:hover{
+    color:rgb(241, 204, 38);
 }

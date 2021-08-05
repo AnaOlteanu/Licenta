@@ -26,7 +26,7 @@ comment.insertComment = (newComment, result) => {
 
 comment.getCommentsByMovieId = (movie_id, result) => {
 
-    mysql.query("SELECT c.comment_text, c.date, u.username FROM comments c JOIN users u ON(u.id = c.user_id) WHERE movie_id = ? ORDER BY c.date DESC", 
+    mysql.query("SELECT c.comment_text, c.date, u.username FROM comments c JOIN users u ON(u.id = c.user_id) WHERE movie_id = ? ORDER BY c.id DESC", 
                     movie_id, (err, res) => {
         if(err){
             result(err, null);

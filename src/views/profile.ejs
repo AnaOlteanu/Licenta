@@ -77,15 +77,28 @@
     </div>
 
     <div id="main-2"></div>
+
+    <div class="row" id="container-fav-title">
+      <div class="col" id="fav-title">
+          <span>Preffered Genres</span>
+          <p id="fav-p">Here you have a statistic based on your liked movies' genres.</p>
+      </div>
+  </div>
+
+  <div id="main-3">
+    <canvas id="myChart" width="400", height="400"></canvas>
+  </div>
    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="../scripts/profile.js"></script>
+    <!-- <script src="path/to/chartjs/dist/chart.js"></script> -->
     <script>
         var data_fav = <%- JSON.stringify(data_f) %>;
         var data_dis = <%- JSON.stringify(data_d) %>
         getFavouriteMovies(data_fav);
         getDislikedMovies(data_dis);
+        // getPreferredGenres(data_fav);
   </script>
 
 </body>

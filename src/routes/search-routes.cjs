@@ -33,12 +33,12 @@ router.get('/detailsSearched', (req, res) => {
     else if(!req.session.adminLoggedIn){
         res.render('search-details',{
             isLoggedIn: false,
-            user: req.session.username
+            user: ""
         })
     } else {
         res.render('search-details', {
             isLoggedIn: false,
-            user: ''
+            user: ""
         })
     }
 })

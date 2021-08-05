@@ -7,15 +7,15 @@ const image_url = 'https://image.tmdb.org/t/p/w500';
 const main = document.getElementById("main");
 
 
-function getDislikedMovies(data_fav){
-    console.log(data_fav);
+function getDislikedMovies(data_dis){
+
     main.innerHTML = '';
     const movie_el = document.createElement('div');
     movie_el.classList.add('row');
     movie_el.style.margin = "100px";
 
-    for(let i = 0; i < data_fav.length; i++){
-        const get_movie_url = tmdb_api + get_movie_api + data_fav[i] + '?' + api_key;
+    for(let i = 0; i < data_dis.length; i++){
+        const get_movie_url = tmdb_api + get_movie_api + data_dis[i] + '?' + api_key;
         
         fetch(get_movie_url).then(res => res.json()).then(data =>{
             const {title,poster_path, release_date, overview, id} = data;
@@ -241,19 +241,18 @@ function removeDislike(movie_id){
 
 document.onclick = function(event){
     const initialTarget = event.target;
-    console.log(initialTarget);
 
     const target = initialTarget.previousElementSibling;
-    console.log(target);
+
 
     if(target !== null && target.tagName.toLowerCase() === 'img'){
         const content = document.getElementsByClassName('content');
         content[0].classList.add('content-display');
         const movie_id = target.alt;
-        console.log(movie_id);
+
 
         const teaserURL = tmdb_api + '/movie/' + movie_id + '/videos?' + api_key;
-        console.log(teaserURL);
+   
 
         fetch(teaserURL).then((res) => res.json()).then((data) => {
             const videos = data.results;
@@ -337,7 +336,7 @@ function addComment(){
 
     document.getElementById('comment-text').value = "";
 
-    const emptyMessage = document.getElementsByClassName('alert');
+    const emptyMessage = document.getElementsByClassName('empty');
     emptyMessage[0].style.display = 'none';
 
 
@@ -378,7 +377,7 @@ function addComment(){
                 commentBox.appendChild(dateBox);
                 commentBox.appendChild(textCommBox);
 
-                commentxTextContainer.appendChild(commentBox);
+                commentxTextContainer.insertBefore(commentBox, commentxTextContainer.firstChild);
             
                 commentDiv.appendChild(commentxTextContainer);
             }
