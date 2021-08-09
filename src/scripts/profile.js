@@ -174,53 +174,116 @@ function getDislikedMovies(data_dis){
     
 }
 
-// var Chart = require('chart.js')
-// var ctx = document.getElementById('myChart');
+var ctx = document.getElementById('myChart');
 
-// const main3 = document.getElementById('main-3');
+const main3 = document.getElementById('main-3');
 
-// async function getPreferredGenres(data_fav){
+async function getPreferredGenres(data_fav){
 
-//     var genres_movie = []
-//     for(let i = 0; i < 3; i++){
+    var genres_movie = [];
+    var frecventa = [];
+    for(let k = 0; k < data_fav.length; k++){
 
-//         const get_movie_url = tmdb_api + get_movie_api + data_fav[i] + '?' + api_key;
+        const get_movie_url = tmdb_api + get_movie_api + data_fav[k] + '?' + api_key;
 
-//         await fetch(get_movie_url).then(res => res.json()).then(data => {
-//             const {genres} = data;
-//             for(let i = 0; i < genres.length; i++){
-//                 console.log(genres[i].name);
-//                 if(genres_movie.length == 0){
-//                     var ob = {
-//                         genre: genres[i].name,
-//                         value: 1
-//                     };
-//                     genres_movie.push(ob);
-//                 }
-//             //     else {
-//             //         for(let j = 0; j < genres_movie.length; j ++)
-//             //             if(genres_movie[j].genre != genres[i].name){
-//             //                 var ob = {
-//             //                     genre: genres[i],
-//             //                     value: 1
-//             //                 };
-//             //                 genres_movie.push(ob);
+        await fetch(get_movie_url).then(res => res.json()).then(data => {
+            const {genres} = data;
 
-//             //             }
-//             //             else {
-//             //                 genres_movie[j].value ++;
-//             //             }
-//             //         }
-                
-//             }
+            for(let i = 0; i < genres.length; i++){
+                var gen_crt = genres[i].name;
+                console.log(gen_crt);
+                if(genres_movie.length == 0){
+        
+                    genres_movie.push(gen_crt);
+                    frecventa.push(1);
+                    
+                }
+               
+                else {
+                    var lungime = genres_movie.length;
+                    if(!genres_movie.includes(gen_crt)){
+                        genres_movie.push(gen_crt);
+                        frecventa.push(1);
+                    } else {
+                        var index = genres_movie.indexOf(gen_crt);
+                        frecventa[index] ++;
+                    }
+                }
+            }
             
-//         })
+            
+        })
 
-//     }
+    }
 
-//     console.log(genres_movie)
+    console.log(genres_movie)
+    console.log(frecventa);
+
+    var gen_freq = [];
+    for(let i = 0; i < genres_movie.length; i++){
+        var ob = {
+            genre: genres_movie[i],
+            freq: frecventa[i]
+        }
+        gen_freq.push(ob);
+    }
+    console.log(gen_freq);
+
+    gen_freq.sort((a, b) => (a.freq > b.freq) ? -1 : ((b.freq > a.freq) ? 1 : 0))
+    console.log(gen_freq);
+
+    var n = genres_movie.length > 10 ? 10 : genres_movie.length;
+    const getFirstN = gen_freq.slice(0, n);
+    
+    const firstNgenres = [];
+    const firstNfreq = [];
+    
+    for(let i = 0; i < n; i++){
+        firstNgenres.push(gen_freq[i].genre);
+        firstNfreq.push(gen_freq[i].freq);
+    }
+
+    var colors = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 206, 86)', 'rgb(75, 192, 192)', 'rgb(153, 102, 255)',
+            'rgb(255, 159, 64)', 'rgb(144,238,144)', 'rgb(221,160,221)', 'rgb(220,20,60)', 'rgb(245,255,250)'];
+    var bgColor = [];
+    for(let i = 0; i < n; i++){
+        var random_color = colors[Math.floor(Math.random() * colors.length)];
+        while(bgColor.includes(random_color)){
+            random_color = colors[Math.floor(Math.random() * colors.length)];
+        }
+        bgColor.push(random_color);
+    }
 
 
-// }
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: firstNgenres,
+            datasets: [{
+                label: 'Number of Movies',
+                data: firstNfreq,
+                backgroundColor: bgColor
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Preferred Genres",
+                fontSize: 20
+              },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    })
+
+    Chart.defaults.global.defaultFontColor = "white";
+}
 
 
