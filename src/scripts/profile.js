@@ -244,7 +244,7 @@ async function getPreferredGenres(data_fav){
     }
 
     var colors = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 206, 86)', 'rgb(75, 192, 192)', 'rgb(153, 102, 255)',
-            'rgb(255, 159, 64)', 'rgb(144,238,144)', 'rgb(221,160,221)', 'rgb(220,20,60)', 'rgb(245,255,250)'];
+            'rgb(255, 159, 64)', 'rgb(144,238,144)', 'rgb(221,160,221)', 'rgb(220,20,60)', 'rgb(139,0,139)'];
     var bgColor = [];
     for(let i = 0; i < n; i++){
         var random_color = colors[Math.floor(Math.random() * colors.length)];
@@ -253,6 +253,8 @@ async function getPreferredGenres(data_fav){
         }
         bgColor.push(random_color);
     }
+
+    console.log(bgColor);
 
 
     var myChart = new Chart(ctx, {
@@ -269,21 +271,18 @@ async function getPreferredGenres(data_fav){
             title: {
                 display: true,
                 text: "Preferred Genres",
-                fontSize: 20
+                fontSize: 30
               },
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+            legend: {
+                position: 'right'
             }
         }
     })
 
     Chart.defaults.global.defaultFontColor = "white";
+
 }
 
 
