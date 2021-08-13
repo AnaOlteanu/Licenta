@@ -8,6 +8,8 @@ const session = require('express-session');
 const emailValidator = require('email-validator');
 const passwordValidator = require('password-validator');
 
+
+
 var schema = new passwordValidator();
 schema.is().min(3);
 
@@ -20,6 +22,8 @@ userApp.use(session({
 
 
 exports.registerUser = async (req, res) => {
+
+
     const {username, password} = req.body;
     if (!req.body.username|| !req.body.password) {
         return res.render('register', {
@@ -53,6 +57,7 @@ exports.registerUser = async (req, res) => {
                             user: req.session.username
                         })
                         else {
+                           
                             res.redirect('/users/login');
                         }
                     })

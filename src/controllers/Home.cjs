@@ -34,6 +34,7 @@ exports.getHomePage = (req, res) => {
             isLoggedIn: false,
             quote: ""
         })
+        
     }
     else if(req.session.adminLoggedIn){
         res.render('home', {

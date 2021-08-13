@@ -8,7 +8,7 @@ const Quote = function(newQuote){
 Quote.addQuote = (newQuote, result) => {
     console.log(newQuote);
     mysql.query("INSERT INTO quotes SET ?", newQuote, (err,res) => {
-        console.log(res);
+        
         if (err) {
             result(err, null);
             return;

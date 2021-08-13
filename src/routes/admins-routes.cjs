@@ -45,4 +45,6 @@ router.delete('/admins/deleteUser', adminController.deleteUser);
 
 router.post('/admins/setQuote', adminController.setQuote);
 
+router.get('/admins/warnUser', adminController.warnUser);
+
 module.exports = router;

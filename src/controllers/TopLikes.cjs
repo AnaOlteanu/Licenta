@@ -3,7 +3,7 @@ const session = require('express-session');
 
 
 exports.getTop10 = (req, res) => {
-
+console.log("mama");
     MovieLike.getTopLikedMovies((err, data) => {
         if(err){
             console.log(err);

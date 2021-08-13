@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const session = require('express-session');
 const { Validator } = require('node-input-validator');
-
+const sendEMail = require('../mail-send/mail.cjs');
 
 
 const adminApp = express();
@@ -194,6 +194,21 @@ exports.getHomePage = (req, res) => {
     
 }
 
+exports.warnUser = (req, res) => {
+    var username = req.query.username;
+    sendEMail(username, data => {
+        if(data == 'success'){
+            res.status(200).json({
+                status: 'success'
+            });
+        } else {
+            res.status(200).json({
+                status: 'error'
+            });
+        }
+    });
+}
+
 exports.deleteUser = (req, res) => {
     var username = req.body.username;
     Admin.deleteUser(username, (err, data) => {
@@ -212,9 +227,6 @@ exports.deleteUser = (req, res) => {
 exports.setQuote = (req, res) => {
     var admin_id = req.body.admin_id;
     var quote = req.body.quote;
-
-    console.log(admin_id);
-    console.log(quote);
 
     const newQuote = new Quote({
         admin_id: admin_id,
