@@ -65,6 +65,9 @@
 
   <div class="comments-container">
     <div class="comments-title"></div>
+    <% if (!user) { %>
+      <div class="comments-info">You have to be <a href="/users/login">logged in</a> to post a comment!</div>
+      <%} %>
     <div id="comments">
       <% if (user) { %>
         <div id="comment-box" class="row">

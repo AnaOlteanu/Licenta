@@ -437,8 +437,8 @@ document.onclick = function(event){
 function createIframe(video) {
     const iframe = document.createElement('iframe');
     iframe.src = `https://www.youtube.com/embed/${video.key}`;
-    iframe.width = 460;
-    iframe.height = 415;
+    iframe.width = '30%';
+    iframe.height = 270;
     iframe.allowFullscreen = true;
     return iframe;
 }

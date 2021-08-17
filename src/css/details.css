@@ -82,6 +82,10 @@
     color: white !important;
 }
 
+.col-5{
+    padding: 3%;
+}
+
 #content-close:hover{
     color: red !important;
     cursor: pointer;
@@ -89,9 +93,9 @@
 
 .container-image {
     position: relative;
-    width: 65%;
     align-items: center;
     margin: auto;
+    width: 65%;
   }
   
 .image {
