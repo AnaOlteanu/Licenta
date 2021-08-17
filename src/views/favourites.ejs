@@ -22,15 +22,11 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/home">Home</a>
               </li>
-              <% if (user) { %>
-                <li class="nav-item">
-                  <a class="nav-link" href="users/logout">Logout</a>
-                </li>
-            <%} else {%>
+              <% if (!user) { %>
                 <li class="nav-item">
                   <a class="nav-link" href="users/login">Login</a>
                 </li>
-            <% } %>
+            <%}  %>
               <li class="nav-item">
                 <a class="nav-link" href="/users/register">Register</a>
               </li>
@@ -46,6 +42,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" id="profile-page" href="/profile">My profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="users/logout">Logout</a>
             </li>
   
               

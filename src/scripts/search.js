@@ -1,6 +1,5 @@
 const api_key = 'api_key=d333bb863d013220663cd102b8cf611e';
 const tmdb_api = 'https://api.themoviedb.org/3';
-const popular_movies_url = tmdb_api + '/discover/movie?sort_by=popularity.desc&' + api_key;
 const image_url = 'https://image.tmdb.org/t/p/w500';
 
 function getSearchedMovies(){
@@ -26,7 +25,6 @@ function getSearchedMovies(){
 function showSearchedMovies(){
     const input_search = document.getElementById('inputSearch'); 
     const value = input_search.value;
-    // console.log(value);
     window.location = 'searchedMovies?movie_name=' + value;
     return false;
 

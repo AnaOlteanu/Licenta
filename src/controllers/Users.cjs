@@ -11,14 +11,9 @@ const passwordValidator = require('password-validator');
 
 
 var schema = new passwordValidator();
-schema.is().min(3);
+schema.is().min(4)
+        .has().digits(2);
 
-const userApp = express();
-userApp.use(session({
-    secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}));
 
 
 exports.registerUser = async (req, res) => {
@@ -42,10 +37,24 @@ exports.registerUser = async (req, res) => {
                         user: req.session.username
                     })
                 } else if(schema.validate(password) == false){
-                    res.render('register', {
-                        message: "Please provide a minimum 3 character password!",
-                        user: req.session.username
-                    })
+                    var failed = schema.validate(password, {list: true});
+                    console.log(failed);
+                    for(let i = 0; i < failed.length; i++){
+                        if(failed[i] == 'min'){
+                            res.render('register', {
+                                message: "Please provide a minimum 4 character password!",
+                                user: req.session.username
+                            })
+                            break;
+                        } 
+                        if(failed[i] == 'digits'){
+                            res.render('register', {
+                                message: "Please provide a password with minimum 2 digits!",
+                                user: req.session.username
+                            })
+                        }
+                    }
+                    
                 } else {
                     const salt = await bcrypt.genSalt()
                     const hashedPassword = await bcrypt.hash(password, salt);
@@ -94,16 +103,8 @@ exports.loginUser = (req, res) => {
             message: "Please provide an username and a password!"
             });
     }
-    else if(emailValidator.validate(username) == false){
-        res.render('login', {
-            message: "Please provide a correct email address!"
-        })
-    }
-    else if(schema.validate(password) == false){
-        res.render('login', {
-            message: "Please provide a minimum 3 character password!"
-        })
-    }
+
+    
     else{
         const user = new User({username: username, password: password});
 

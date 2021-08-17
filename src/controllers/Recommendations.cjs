@@ -179,13 +179,12 @@ exports.getRecommendations = async (req, res) => {
                                     if(scor_similaritate.length > 1){
                                         scor_similaritate.sort((a, b) => (a.scor > b.scor) ? -1 : ((b.scor > a.scor) ? 1 : 0))
                                         
-                                        
                                         if(scor_similaritate.length <= 4){
                                             nr_k_users = scor_similaritate.length;
                                             
                                         }
                                         else{
-                                            nr_k_users = 5;
+                                            nr_k_users = 4;
                                         }
                                     }
                                     

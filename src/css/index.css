@@ -140,7 +140,8 @@ a{
 .btns-container{
   position: relative;
   margin: auto;
-  padding-top: 20%;
+  margin-top: 10%;
+  padding-bottom: 3%; 
 }
 
 .col{
