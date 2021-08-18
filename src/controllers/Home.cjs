@@ -1,8 +1,7 @@
 const Quote = require('../models/quote.cjs')
-const session = require('express-session');
 
 exports.getHomePage = (req, res) => {
-
+    console.log(req.session);
     if(req.session.loggedin){
 
         Quote.getQuote((err,data) => {

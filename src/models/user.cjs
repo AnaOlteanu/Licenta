@@ -21,11 +21,9 @@ User.getAll = result => {
 User.create = (newUser, result) => {
     mysql.query("INSERT INTO users SET ?", newUser, (err, res) => {
         if (err) {
-            console.log("error: ", err);
             result(err, null);
             return;
           }
-        console.log("created user: ", { id: res.insertId, ...newUser });
         result(null, { id: res.insertId, ...newUser });
     })
 }
@@ -39,9 +37,7 @@ User.login = (user, result) => {
             result(null, 'no result');
             return;
         }
-
         try{
-            
             console.log('Userul este: ' + user.username)
             if(await bcrypt.compare(user.password, res[0].password)){
                 console.log('Success')
@@ -52,8 +48,8 @@ User.login = (user, result) => {
                 result(err,'denied')
                 return;
             }
-        }catch{
-            //res.status(500).send()
+        }catch(e){
+            console.log(e)
         }
     })
 }

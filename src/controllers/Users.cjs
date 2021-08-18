@@ -1,10 +1,7 @@
 const User = require('../models/user.cjs')
 const FavouriteMovies = require('../models/favourite_movies.cjs')
 const DislikedMovies = require('../models/disliked_movies.cjs')
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const express = require('express');
-const session = require('express-session');
 const emailValidator = require('email-validator');
 const passwordValidator = require('password-validator');
 
@@ -17,7 +14,6 @@ schema.is().min(4)
 
 
 exports.registerUser = async (req, res) => {
-
 
     const {username, password} = req.body;
     if (!req.body.username|| !req.body.password) {
@@ -86,7 +82,6 @@ exports.registerUser = async (req, res) => {
             }
         })
 
-
     } catch(e){
         console.log(e);
     }
@@ -104,7 +99,6 @@ exports.loginUser = (req, res) => {
             });
     }
 
-    
     else{
         const user = new User({username: username, password: password});
 
@@ -131,8 +125,7 @@ exports.loginUser = (req, res) => {
 }
 
 exports.logoutUser = (req, res) => {
-    req.session.loggedin = false;
-    req.session.username = '';
+    req.session.destroy();
     res.redirect('/home');
 }
 
@@ -148,7 +141,6 @@ exports.profileUser = (req, res) => {
                 DislikedMovies.getAll(user_id, (err, data) => {
                     if(err == true){
                         var dis = []
-                        console.log("AM AJUNS");
                         res.render('profile', {
                             dislikes: false,
                             favourites: false,

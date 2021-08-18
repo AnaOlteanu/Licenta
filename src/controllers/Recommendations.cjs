@@ -1,5 +1,5 @@
-const DislikedMovies = require('../models/disliked_movies.cjs')
-const FavouriteMovies = require('../models/favourite_movies.cjs')
+const DislikedMovies = require('../models/movie_dislikes.cjs')
+const FavouriteMovies = require('../models/movie_likes.cjs')
 const session = require('express-session');
 
 exports.getRecommendations = async (req, res) => {
@@ -28,9 +28,6 @@ exports.getRecommendations = async (req, res) => {
                     }
                     
                 }
-                
-
-            
 
                 await DislikedMovies.getAll(user_id, async (err, data) => {
 
@@ -169,7 +166,7 @@ exports.getRecommendations = async (req, res) => {
                                         obj['user_id'] = matrix[i][0];
                                         obj['scor'] = index_similaritate;
                                         scor_similaritate.push(obj);
-                                        console.log(scor_similaritate);
+                                        
                                     }
                                 }
 

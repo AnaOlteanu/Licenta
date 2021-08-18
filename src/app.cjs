@@ -4,8 +4,6 @@ const adminRoutes = require('./routes/admins-routes.cjs');
 const userRoutes = require('./routes/users-routes.cjs');
 const movieLikesRoutes = require('./routes/movie-likes-routes.cjs');
 const movieDislikesRoutes = require('./routes/movie-dislikes-routes.cjs');
-const favouriteMoviesRoutes = require('./routes/favourites-routes.cjs');
-const dislikedMoviesRoutes = require('./routes/dislikes-routes.cjs');
 const recommendationRoutes = require('./routes/recommendations-routes.cjs');
 const homeRoutes = require('./routes/home-routes.cjs');
 const topLikesRoutes = require('./routes/top-likes.cjs');
@@ -35,8 +33,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-
 //home route
 app.use(homeRoutes);
 
@@ -55,12 +51,6 @@ app.use(movieLikesRoutes);
 //movie dislikes routes
 app.use(movieDislikesRoutes);
 
-//favourite movies routes
-app.use(favouriteMoviesRoutes);
-
-//disliked movies routes
-app.use(dislikedMoviesRoutes);
-
 //recommended movies routes
 app.use(recommendationRoutes);
 
@@ -70,8 +60,10 @@ app.use(topLikesRoutes);
 //searched movie by name routes
 app.use(searchedMovieRoutes);
 
+//comments for movies routes
 app.use(commentsRoutes);
 
+//user profile route
 app.use(profileRoutes);
 
 const port = 3000;
