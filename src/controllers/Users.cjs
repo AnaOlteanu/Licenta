@@ -1,11 +1,9 @@
 const User = require('../models/user.cjs')
-const FavouriteMovies = require('../models/favourite_movies.cjs')
-const DislikedMovies = require('../models/disliked_movies.cjs')
+const FavouriteMovies = require('../models/movie_likes.cjs')
+const DislikedMovies = require('../models/movie_dislikes.cjs')
 const bcrypt = require('bcrypt');
 const emailValidator = require('email-validator');
 const passwordValidator = require('password-validator');
-
-
 
 var schema = new passwordValidator();
 schema.is().min(4)
@@ -25,7 +23,7 @@ exports.registerUser = async (req, res) => {
     
     try{
         await User.checkIfExists(username, async (err, data) => {
-            console.log(data);
+            
             if(!err && data == 'nu exista'){
                 if(emailValidator.validate(username) == false){
                     res.render('register', {
@@ -34,7 +32,7 @@ exports.registerUser = async (req, res) => {
                     })
                 } else if(schema.validate(password) == false){
                     var failed = schema.validate(password, {list: true});
-                    console.log(failed);
+                   
                     for(let i = 0; i < failed.length; i++){
                         if(failed[i] == 'min'){
                             res.render('register', {
@@ -45,7 +43,7 @@ exports.registerUser = async (req, res) => {
                         } 
                         if(failed[i] == 'digits'){
                             res.render('register', {
-                                message: "Please provide a password with minimum 2 digits!",
+                                message: req.flash("Please provide a password with minimum 2 digits!"),
                                 user: req.session.username
                             })
                         }

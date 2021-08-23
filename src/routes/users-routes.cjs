@@ -6,7 +6,7 @@ const userController = require('../controllers/Users.cjs');
 
 router.get('/users/register', (req, res) => {
     res.render('register', {
-        message: '',
+        message: "",
         user: req.session.username
     });
   

@@ -69,11 +69,10 @@
 }
 
 #quote-container{
-    margin: 10%;
+    margin: 5%;
 }
 
 #quote-text{
-    margin-right: 10px;
     background: rgba(0, 0, 0, 0.7);
     color: white;
     margin-right: 2%;

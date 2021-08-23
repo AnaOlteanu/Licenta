@@ -152,10 +152,7 @@ exports.loginAdmin = (req, res) => {
 }
 
 exports.logoutAdmin = (req, res) => {
-    // req.session.admin = '';
-    // req.session.adminLoggedIn = false;
-    // req.session.loggedin = false;
-    // req.session.adminId = '';
+
     req.session.destroy();
     res.redirect('/');
 }

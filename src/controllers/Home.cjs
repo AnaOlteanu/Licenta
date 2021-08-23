@@ -1,7 +1,6 @@
 const Quote = require('../models/quote.cjs')
 
 exports.getHomePage = (req, res) => {
-    console.log(req.session);
     if(req.session.loggedin){
 
         Quote.getQuote((err,data) => {

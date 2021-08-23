@@ -1,6 +1,5 @@
 const Comment = require('../models/comments.cjs')
 const User = require('../models/user.cjs');
-const session = require('express-session');
 
 
 exports.addComment = async (req, res) => {

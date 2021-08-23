@@ -20,8 +20,7 @@ likeMovie.checkIfExists = (newLikeMovie, result) => {
 
     mysql.query("SELECT * FROM movie_likes WHERE user_id = ? AND movie_id = ? ", 
         [newLikeMovie.user_id, newLikeMovie.movie_id], (err, res) => {
-        
-        //daca exista la likes
+
         if(res.length > 0){
             result(true, false);
             return;
@@ -89,7 +88,7 @@ likeMovie.getUsers = (movie_ids, user_id, result) => {
     mysql.query('SELECT * FROM movie_likes WHERE movie_id IN ( ' + movie_ids.join() + ') AND user_id != ?', 
                 user_id, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+
             result(err, null);
             return;
         }

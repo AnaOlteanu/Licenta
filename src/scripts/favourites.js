@@ -54,7 +54,6 @@ function showMovieDetails(id){
 function getFavMovieDetails(){
     var url = new URL(window.location.href);
     let movie_id = url.searchParams.get('movie_id'); 
-    //console.log(movie_id);
     let movie_details_url = tmdb_api + '/movie/' + movie_id + '?' + api_key;
 
     const container_button = document.getElementById('container_back_button');

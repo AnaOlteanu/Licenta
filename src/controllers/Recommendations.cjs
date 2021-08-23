@@ -1,12 +1,10 @@
 const DislikedMovies = require('../models/movie_dislikes.cjs')
 const FavouriteMovies = require('../models/movie_likes.cjs')
-const session = require('express-session');
 
 exports.getRecommendations = async (req, res) => {
     
     var user_id = req.session.userId;
 
-    var matrix = [];
     var matrix = [];
     
     var nr_movies = 0;
@@ -18,10 +16,7 @@ exports.getRecommendations = async (req, res) => {
     if(req.session.loggedin){
         try{
             await FavouriteMovies.getAll(user_id, async (err, data) => {
-                if(err == true){
-                    
-                }
-                else{
+                if(err == false){
                     for(let i = 0; i < data.length; i++){
                         favourite_movies.push(data[i].movie_id);
                         all_movies_user.push(data[i].movie_id);
@@ -38,7 +33,6 @@ exports.getRecommendations = async (req, res) => {
                         }
                     }
                     
-
 
                     nr_movies = favourite_movies.length + disliked_movies.length;
 
@@ -176,7 +170,7 @@ exports.getRecommendations = async (req, res) => {
                                     if(scor_similaritate.length > 1){
                                         scor_similaritate.sort((a, b) => (a.scor > b.scor) ? -1 : ((b.scor > a.scor) ? 1 : 0))
                                         
-                                        if(scor_similaritate.length <= 4){
+                                        if(scor_similaritate.length <= 3){
                                             nr_k_users = scor_similaritate.length;
                                             
                                         }
@@ -185,8 +179,8 @@ exports.getRecommendations = async (req, res) => {
                                         }
                                     }
                                     
-                                    var fav = [];
-                                    var dis = [];
+                                    var fav = new Set();
+                                    var dis = new Set();
                                     var k_users = []
                                     for(let i = 0; i < nr_k_users; i++){
                                         k_users.push(scor_similaritate[i].user_id)
@@ -197,9 +191,8 @@ exports.getRecommendations = async (req, res) => {
                                         
 
                                         if(err == false){
-                                            for(let j = 0; j < data.length; j++){
-                                                if(!fav.includes(data[j].movie_id))
-                                                    fav.push(data[j].movie_id);
+                                             for(let j = 0; j < data.length; j++){
+                                                fav.add(data[j].movie_id);
                                             }
                                         }
                                        
@@ -208,12 +201,13 @@ exports.getRecommendations = async (req, res) => {
                                             
                                             if(err == false){
                                                 for(let j = 0; j < data.length; j++){
-                                                    if(!dis.includes(data[j].movie_id) && !fav.includes(data[j].movie_id))
-                                                        dis.push(data[j].movie_id);
-                                                
+                                                    if(!fav.has(data[j].movie_id))
+                                                        dis.add(data[j].movie_id);
                                                 }
                                             }
-                                            var recommended_movies = fav.concat(dis);
+                                            
+                                            fav.forEach(dis.add, dis);
+                                            var recommended_movies = Array.from(dis);
                                             
                                             if(recommended_movies.length > 0){
                                                 res.render('recommendations', {

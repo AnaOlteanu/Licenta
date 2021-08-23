@@ -11,7 +11,6 @@ const searchedMovieRoutes = require('./routes/search-routes.cjs');
 const detailsRoutes = require('./routes/details-routes.cjs');
 const commentsRoutes = require('./routes/comments-routes.cjs');
 const profileRoutes = require('./routes/profile-routes.cjs');
-
 const app = express();
 
 

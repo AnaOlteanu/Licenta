@@ -1,12 +1,9 @@
 
 const nodemailer = require('nodemailer');
-
 const dotenv = require('dotenv');
 dotenv.config();
 
-  
 let mailTransporter = nodemailer.createTransport({
-   
     service: process.env.SERVICE_ENV,
     auth: {
         user: process.env.EMAIL_ENV,
