@@ -21,6 +21,7 @@ const sendEMail = (email, result) => {
     let mailDetails = {
         from: process.env.EMAIL_ENV,
         to: email,
+        name: 'Movies4U',
         subject: 'Your Movies4U account will be deleted',
         text: "Hello! We want to inform you that your account will be deleted due to unappropriate behaviour. Thank you for your understanding!"
     };

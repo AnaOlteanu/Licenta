@@ -12,6 +12,7 @@ const detailsRoutes = require('./routes/details-routes.cjs');
 const commentsRoutes = require('./routes/comments-routes.cjs');
 const profileRoutes = require('./routes/profile-routes.cjs');
 const app = express();
+const flash = require('connect-flash')
 
 
 app.set('view engine', 'ejs')
@@ -25,6 +26,7 @@ app.use(express.static(__dirname))
         resave: true,
         saveUninitialized: true
     }))
+    .use(flash())
  
 
 app.get('/', (req, res) => {

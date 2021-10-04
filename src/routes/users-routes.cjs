@@ -3,10 +3,10 @@ const router = express.Router();
 
 const userController = require('../controllers/Users.cjs');
 
-
+let message = "";
 router.get('/users/register', (req, res) => {
     res.render('register', {
-        message: "",
+        message: message,
         user: req.session.username
     });
   
@@ -15,7 +15,7 @@ router.post('/users/register', userController.registerUser);
 
 router.get('/users/login', (req, res) => {
   res.render('login', {
-    message: ''
+    message: message
   })
 })
 

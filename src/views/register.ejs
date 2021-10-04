@@ -58,17 +58,16 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <form action="/users/register"  method="POST" class="box">
+                        <form onsubmit ="return validate()" action="/users/register"  method="POST" class="box">
                             <h1>Register</h1>
-                            <p> Please complete all the fields!</p> 
-                            
+                            <p> Please complete all the fields!</p>
                             <input type="text" name="username" placeholder="Username(Email)"> 
                             <input type="password" name="password" placeholder="Password"> 
                             <div class="form-group text-center" >
                                 <button class="btn" type="submit" value="login">Register</button>
                             </div>
-                            <% if (message) { %>
-                              <h5 class="alert alert-danger"><%= message %></h5> 
+                            <% if ( message ) { %>
+                              <h5 id="alerta" class="alert alert-danger"><%= message %></h5> 
                           <%} %>
                         </form>
                     </div>
@@ -77,6 +76,6 @@
         </div>
     
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+        <script src="../scripts/register.js"></script>
     </body>
 </html>

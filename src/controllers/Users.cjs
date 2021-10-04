@@ -10,13 +10,13 @@ schema.is().min(4)
         .has().digits(2);
 
 
-
 exports.registerUser = async (req, res) => {
 
     const {username, password} = req.body;
     if (!req.body.username|| !req.body.password) {
+        req.flash('message', "Please provide an username and password!")
         return res.render('register', {
-            message: "Please provide an username and a password!",
+            message: req.flash('message'),
             user: req.session.username
             });
     }
@@ -27,7 +27,7 @@ exports.registerUser = async (req, res) => {
             if(!err && data == 'nu exista'){
                 if(emailValidator.validate(username) == false){
                     res.render('register', {
-                        message: "Please provide a correct email address!",
+                        message: username + " is not a valid email",
                         user: req.session.username
                     })
                 } else if(schema.validate(password) == false){
